@@ -149,7 +149,7 @@ hr:before {
 /* end 回形针 */
 
 /* 滚动条 */
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     width: 8px;
     height: 8px
 }
@@ -167,7 +167,7 @@ hr:before {
 
 ::-webkit-scrollbar-corner {
     background-color: transparent
-}
+}*/
 /* end 滚动条 */
 
 /* valine 评论 */
