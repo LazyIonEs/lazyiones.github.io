@@ -171,6 +171,7 @@ hr:before {
 /* end 滚动条 */
 
 /* valine 评论 */
+
 /* 去除了dark模式下头像border和padding */
 [data-theme='dark'] .v[data-class=v] .vcards .vcard .vimg {
     padding: 0;
