@@ -1,0 +1,486 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Android CameraX CameraController | LazyIonEs</title><meta name="author" content="LazyIonEs"><meta name="copyright" content="LazyIonEs"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="CameraX currently provides CameraView, a View that displays a preview of the camera, while also providing methods to take pictures, control the camera, and query camera information. CameraView clearly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android CameraX CameraController">
+<meta property="og:url" content="https://blog.lazyiones.top/2023/08/30/Android-CameraX-CameraController/index.html">
+<meta property="og:site_name" content="LazyIonEs">
+<meta property="og:description" content="CameraX currently provides CameraView, a View that displays a preview of the camera, while also providing methods to take pictures, control the camera, and query camera information. CameraView clearly">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lazyiones.top/img/cover/img_cover_30.png">
+<meta property="article:published_time" content="2023-08-30T11:14:58.000Z">
+<meta property="article:modified_time" content="2023-08-30T11:26:40.093Z">
+<meta property="article:author" content="LazyIonEs">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="CameraX">
+<meta property="article:tag" content="Jetpack">
+<meta property="article:tag" content="相机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lazyiones.top/img/cover/img_cover_30.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.lazyiones.top/2023/08/30/Android-CameraX-CameraController/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Android CameraX CameraController',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-30 19:26:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/img/loading.gif" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/top_banner_2.png')"><nav id="nav"><span id="blog-info"><a href="/" title="LazyIonEs"><span class="site-name">LazyIonEs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android CameraX CameraController</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-30T11:14:58.000Z" title="发表于 2023-08-30 19:14:58">2023-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-30T11:26:40.093Z" title="更新于 2023-08-30 19:26:40">2023-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/CameraX/">CameraX</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android CameraX CameraController"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/08/30/Android-CameraX-CameraController/#post-comment"><span class="waline-comment-count" data-path="/2023/08/30/Android-CameraX-CameraController/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://developer.android.com/training/camerax">CameraX</a> currently provides <code>CameraView</code>, a <code>View</code> that displays a preview of the camera, while also providing methods to take pictures, control the camera, and query camera information. <code>CameraView</code> clearly takes on more responsibilities than a <code>View</code> should, as it participates in the <code>View</code> hierarchy and displays content, while also owning camera resources that exist outside the scope and lifecycle of the <code>View</code> hierarchy.</p>
+<p><code>CameraView</code> violates the separation of concerns principle, making it harder to guarantee its robustness in all corner cases. As a result, it will be marked as deprecated and removed before CameraX’s view artifact reaches Beta. It has been split up into two parts that you should use instead: <code>PreviewView</code> which handles its view-related tasks, and <code>CameraController</code> which handles the camera operations.</p>
+<p><code>PreviewView</code> has been available in CameraX’s view artifact for a while. <code>CameraController</code>, however, was introduced recently in version alpha19. It’s a high-level, all-in-one API that provides a way to easily access and manipulate core camera features, including displaying a camera preview, taking a picture, and analyzing camera frames. It does so while matching the output of its use cases to the viewfinder’s preview, thus providing a “What You See Is What You Get” (WYSIWYG) experience, a highly requested feature by developers that makes CameraX’s usage very intuitive. It also takes care of initializing the camera and adapting its output to device rotation.</p>
+<p>To offload the burden of starting, stopping, and closing the camera, CameraX also introduced <code>LifecycleCameraController</code>, which offers all the convenience of <code>CameraController</code> with the added benefit of binding the camera’s lifecycle to that of a <code>LifecycleOwner</code>, typically the lifecycle of a <code>Fragment</code> or <code>Activity</code>. This allows the lifecycle’s state to control when the camera is opened, stopped, and closed.</p>
+<p>Using <code>PreviewView</code> with <code>CameraController</code> is fairly simple, and can be done as follows:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set up the CameraController</span></span><br><span class="line"><span class="keyword">val</span> cameraController = LifecycleCameraController(context)</span><br><span class="line">cameraController.bindToLifecycle(lifecycleOwner)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Attach the CameraController to PreviewView</span></span><br><span class="line"><span class="keyword">val</span> previewView = findViewById(R.id.preview_view)</span><br><span class="line">previewView.setController(cameraController)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use the CameraController</span></span><br><span class="line">cameraController.takePicture(…)</span><br></pre></td></tr></table></figure>
+
+<p>The following sections list the mappings from <code>CameraView</code> to <code>CameraController</code>. You can use them to migrate from <code>CameraView</code> to <code>PreviewView</code> and <code>CameraController</code>.</p>
+<h1 id="Camera-Initialization"><a href="#Camera-Initialization" class="headerlink" title="Camera Initialization"></a>Camera Initialization</h1><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-</td>
+<td align="left">getInitializationFuture()</td>
+</tr>
+</tbody></table>
+<p>Unlike <code>CameraView</code>, <code>CameraController</code> provides a <code>ListenableFuture</code> to monitor its initialization. It’s an asynchronous operation during which <code>CameraController</code> initializes CameraX and binds its use cases. The benefit of using this <code>ListenableFuture</code> is twofold:</p>
+<ul>
+<li>Once it successfully completes, you can allow your users to start interacting with the camera, for example by taking pictures and zooming in and out of the viewfinder.</li>
+<li>In case it fails, you can gracefully handle the error and communicate it to your users.</li>
+</ul>
+<p>In case you aren’t familiar with <code>ListenableFuture</code>: it wraps an asynchronous operation and allows you to attach a listener that’s invoked on its completion. In case the operation has already finished, the future returns immediately.</p>
+<h1 id="Camera-Lifecycle"><a href="#Camera-Lifecycle" class="headerlink" title="Camera Lifecycle"></a>Camera Lifecycle</h1><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">LifecycleCameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">bindToLifecycle(LifecycleOwner)</td>
+<td align="left">bindToLifecycle(LifecycleOwner)</td>
+</tr>
+</tbody></table>
+<p>Similar to <code>CameraView</code>, <code>LifecycleCameraController</code> ties control of the camera to a lifecycle. You must bind a valid <code>LifecycleOwner</code> to the controller for it to be operational.</p>
+<p><code>LifecycleCameraController</code> provides an additional <code>unbind()</code> method which allows you to prematurely close the camera before the lifecycle that it’s bound to comes to an end. This is useful in cases in which the camera isn’t integral to a screen and isn’t needed for its entire lifecycle. Alternatively, you can define your custom <code>LifecycleOwner</code> to control when to close the camera, but <code>unbind()</code> can be more convenient in some cases.</p>
+<h1 id="Camera-Control"><a href="#Camera-Control" class="headerlink" title="Camera Control"></a>Camera Control</h1><h2 id="Zoom"><a href="#Zoom" class="headerlink" title="- Zoom"></a><strong>- Zoom</strong></h2><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">isZoomSupported()</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">isPinchToZoomEnabled()</td>
+<td align="left">isPinchToZoomEnabled()</td>
+</tr>
+<tr>
+<td align="left">setPinchToZoomEnabled(Boolean)</td>
+<td align="left">setPinchToZoomEnabled(Boolean)</td>
+</tr>
+<tr>
+<td align="left">getZoomRatio()</td>
+<td align="left">getZoomState().getZoomRatio()</td>
+</tr>
+<tr>
+<td align="left">getMinZoomRatio()</td>
+<td align="left">getZoomState().getMinZoomRatio()</td>
+</tr>
+<tr>
+<td align="left">getMaxZoomRatio()</td>
+<td align="left">getZoomState().getMaxZoomRatio()</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">getZoomState().getLinearZoom()</td>
+</tr>
+<tr>
+<td align="left">setZoomRatio(float)</td>
+<td align="left">setZoomRatio(float)</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">setLinearZoom(float)</td>
+</tr>
+</tbody></table>
+<p><code>CameraController</code> allows you to observe the camera’s zoom state via a <code>LiveData</code> instance. This state becomes available once the camera is open, and holds both static information, like the maximum and minimum zoom ratios, and dynamic information, like the current zoom ratio. You can verify whether zoom is supported using the maximum zoom ratio as follows:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> isZoomSupported = getZoomState().getValue().getMaxZoomRatio() != <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><code>CameraController</code> additionally provides methods to get and set linear zoom, which can vary between 0 (minimum zoom) and 1 (maximum zoom).</p>
+<p>Finally, like <code>CameraView</code>, <code>CameraController</code> allows you to enable or disable pinch-to-zoom. When enabled, <code>CameraController</code> handles pinch gestures on its attached <code>PreviewView</code> to zoom the camera in and out.</p>
+<table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">enableTorch(boolean)</td>
+<td align="left">enableTorch(boolean)</td>
+</tr>
+<tr>
+<td align="left">isTorchOn()</td>
+<td align="left">getTorchState()</td>
+</tr>
+<tr>
+<td align="left">getFlash()</td>
+<td align="left">getImageCaptureFlashMode()</td>
+</tr>
+<tr>
+<td align="left">setFlash(int)</td>
+<td align="left">setImageCaptureFlashMode(int)</td>
+</tr>
+</tbody></table>
+<p><code>CameraController</code> provides similar methods as <code>CameraView</code> to set and query the image capture’s flash mode, but unlike <code>CameraView</code>, it allows observing changes in the camera’s torch state via a <code>LiveData</code> instance, which emits <code>TorchState.OFF</code> and <code>TorchState.ON</code>.</p>
+<h2 id="Focus-Metering"><a href="#Focus-Metering" class="headerlink" title="- Focus&#x2F;Metering"></a>- Focus&#x2F;Metering</h2><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-</td>
+<td align="left">isTapToFocusEnabled()</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">setTapToFocusEnabled(boolean)</td>
+</tr>
+</tbody></table>
+<p>While <code>CameraView</code> automatically acquires focus on any region of the viewfinder that is tapped, <code>CameraController</code> provides more flexibility by allowing you to enable or disable tap-to-focus functionality. When enabled, <code>CameraController</code> handles touch events on its attached <code>PreviewView</code> by focusing the camera on tapped regions.</p>
+<h1 id="Camera-Selection"><a href="#Camera-Selection" class="headerlink" title="Camera Selection"></a>Camera Selection</h1><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">LifecycleCameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">hasCameraWithLensFacing(int)</td>
+<td align="left">hasCamera(CameraSelector)</td>
+</tr>
+<tr>
+<td align="left">setCameraLensFacing(Integer)</td>
+<td align="left">setCameraSelector(CameraSelector)</td>
+</tr>
+<tr>
+<td align="left">getCameraLensFacing()</td>
+<td align="left">getCameraSelector()</td>
+</tr>
+<tr>
+<td align="left">toggleCamera()</td>
+<td align="left">-</td>
+</tr>
+</tbody></table>
+<p><code>CameraController</code> provides you with more control over which camera to use by allowing you to specify a <code>CameraSelector</code> to select the camera it uses. This allows you to rotate between various cameras when toggling cameras, instead of only the default front and back cameras, which was a limitation of <code>CameraView.toggleCamera()</code>. You can still implement this fairly easily, though, using <code>CameraController</code> as follows.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">toggleCamera</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (cameraController.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA </span><br><span class="line">        &amp;&amp; cameraController.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA) &#123;</span><br><span class="line">        cameraController.cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cameraController.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA </span><br><span class="line">               &amp;&amp; cameraController.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) &#123;</span><br><span class="line">        cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Camera-Use-Cases"><a href="#Camera-Use-Cases" class="headerlink" title="Camera Use Cases"></a>Camera Use Cases</h1><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">getCaptureMode()</td>
+<td align="left">isImageCaptureEnabled()</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">isImageAnalysisEnabled()</td>
+</tr>
+<tr>
+<td align="left">setCaptureMode(CaptureMode)</td>
+<td align="left">setEnabledUseCases(int)</td>
+</tr>
+</tbody></table>
+<p><code>CameraController</code> supports all of CameraX’s <a target="_blank" rel="noopener" href="https://developer.android.com/training/camerax/architecture#structure">use cases</a>: <code>Preview</code>, <code>ImageAnalysis</code>, and <code>ImageCapture</code>, thus making it a more robust camera solution compared to <code>CameraView</code>. It also matches the output of <code>ImageAnalysis</code> and <code>ImageCapture</code> to the preview’s display, thereby providing a WYSIWYG experience.</p>
+<p><code>CameraController</code>’s default state enables preview, image analysis, and image capture. The <code>Preview</code> use case is <strong>always</strong> enabled, so you can choose the remaining use cases to enable or disable depending on your camera usage needs.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Enable image capture, equivalent to cameraView.setCaptureMode(IMAGE)</span></span><br><span class="line"><span class="comment">// CameraController&#x27;s enabled use cases: Preview + ImageCapture</span></span><br><span class="line">cameraController.setEnabledUseCases(IMAGE_CAPTURE)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Enable image capture and image analysis</span></span><br><span class="line"><span class="comment">// CameraController&#x27;s enabled use cases: Preview + ImageCapture + ImageAnalysis</span></span><br><span class="line">cameraController.setEnabledUseCases(IMAGE_CAPTURE|IMAGE_ANALYSIS)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Preview"><a href="#Preview" class="headerlink" title="- Preview"></a>- Preview</h2><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">getPreviewStreamState()</td>
+<td align="left">Call directly on associated PreviewView</td>
+</tr>
+<tr>
+<td align="left">getScaleType()</td>
+<td align="left">Call directly on associated PreviewView</td>
+</tr>
+<tr>
+<td align="left">setScaleType(ScaleType)</td>
+<td align="left">Call directly on associated PreviewView</td>
+</tr>
+</tbody></table>
+<p>Unlike <code>CameraView</code> which wraps (and thus hides) a <code>PreviewView</code> instance and forwards method calls to it, <code>CameraController</code> is decoupled from <code>PreviewView</code>. This means you have more control over the viewfinder, and can access and manipulate it directly.</p>
+<h2 id="ImageAnalysis"><a href="#ImageAnalysis" class="headerlink" title="- ImageAnalysis"></a>- ImageAnalysis</h2><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-</td>
+<td align="left">setImageAnalysisAnalyzer(Executor, Analyzer)</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">clearImageAnalysisAnalyzer()</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">getImageAnalysisBackpressureStrategy()</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">setImageAnalysisBackpressureStrategy(int)</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">getImageAnalysisImageQueueDepth()</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">setImageAnalysisImageQueueDepth(int)</td>
+</tr>
+</tbody></table>
+<p>Unlike <code>CameraView</code>, <code>CameraController</code> supports the <code>ImageAnalysis</code> use case. You can set and clear its <code>Analyzer</code>, while also configuring its image-processing pipeline.</p>
+<h2 id="ImageCapture"><a href="#ImageCapture" class="headerlink" title="- ImageCapture"></a>- ImageCapture</h2><table>
+<thead>
+<tr>
+<th align="left">CameraView</th>
+<th align="left">CameraController</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">takePicture(Executor, OnImageCapturedCallback)</td>
+<td align="left">takePicture(Executor, OnImageCapturedCallback)</td>
+</tr>
+<tr>
+<td align="left">takePicture(OutputFileOptions, Executor, OnImageSavedCallback)</td>
+<td align="left">takePicture(OutputFileOptions, Executor, OnImageSavedCallback)</td>
+</tr>
+</tbody></table>
+<p><code>CameraController</code> provides the same methods as <code>CameraView</code> to take a picture, specify the image save destination, and provide the image capture callbacks.</p>
+<p><em>One thing to note is that</em> <code>*CameraController*</code> <em>mirrors an image captured with a front-facing camera, unless you disable this in the</em> <code>*OutputFileOptions*</code><em>’s metadata by calling</em> <code>*Metadata.setReversedHorizontal(false)*</code>.</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>In summary:</p>
+<ul>
+<li>Because <code>CameraView</code> is handling the responsibilities of both a view and a controller in the MVC sense, CameraX is deprecating it and splitting it into <code>PreviewView</code> and the newly introduced <code>CameraController</code>.</li>
+<li><code>CameraController</code> handles camera initialization, as well as the creation and configuration of its use cases.</li>
+<li><code>CameraController</code> provides a WYSIWYG experience by matching the output of its use cases to <code>PreviewView</code>’s display.</li>
+<li><code>CameraController</code> listens to the device’s motion sensor to correctly rotate the output of its use cases.</li>
+<li><code>CameraController</code> adds support for the <code>ImageAnalysis</code> use case, making it a more robust camera solution that provides easy access to all of CameraX’s use cases.</li>
+<li><code>CameraController</code> supports all of <code>CameraView</code>’s features and more, such as enabling and disabling tap-to-focus, getting and setting linear zoom, and observing dynamic camera information like the zoom and torch states.</li>
+<li><code>LifecycleCameraController</code> is a <code>CameraController</code> that binds the camera’s lifecycle to that of a <code>LifecycleOwner</code>, typically the lifecycle of the UI.</li>
+</ul>
+<p>Want more CameraX goodness? Check out:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.android.com/training/camerax">Official CameraX documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://codelabs.developers.google.com/codelabs/camerax-getting-started">Guided CameraX introduction codelab</a></li>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/a/android.com/g/camerax-developers">CameraX developer community</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/android/camera-samples/tree/master/CameraXBasic">CameraX official sample app</a></li>
+</ul>
+<p>转载至<a target="_blank" rel="noopener" href="https://medium.com/androiddevelopers/camerax-learn-how-to-use-cameracontroller-e3ed10fffecf">medium.com</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top">LazyIonEs</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top/2023/08/30/Android-CameraX-CameraController/">https://blog.lazyiones.top/2023/08/30/Android-CameraX-CameraController/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.lazyiones.top" target="_blank">LazyIonEs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/CameraX/">CameraX</a><a class="post-meta__tags" href="/tags/Jetpack/">Jetpack</a><a class="post-meta__tags" href="/tags/%E7%9B%B8%E6%9C%BA/">相机</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/img_cover_30.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_55.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">HomeBrew 常用指令</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/14/Android-CameraX%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Android CameraX的基本使用"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_30.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-14</div><div class="title">Android CameraX的基本使用</div></div></a></div><div><a href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_20.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-15</div><div class="title">Android CameraX中使用Camera2</div></div></a></div><div><a href="/2023/05/05/%E3%80%90%E8%87%AA%E5%AE%9A%E4%B9%89-View%E3%80%91%E7%9B%B8%E6%9C%BA%E9%A2%84%E8%A7%88%E7%82%B9%E5%87%BB%E8%81%9A%E7%84%A6%E6%A1%86-%E5%B8%A6%E5%AF%B9%E7%84%A6%E5%8A%A8%E7%94%BB%EF%BC%8C%E6%9B%9D%E5%85%89%E8%B0%83%E6%95%B4/" title="【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_39.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-05</div><div class="title">【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)</div></div></a></div><div><a href="/2023/08/04/%E4%BD%BF%E7%94%A8-sourceSets-%E7%AE%A1%E7%90%86%E9%A3%8E%E5%91%B3%E7%89%B9%E5%AE%9A%E7%9A%84-AndroidManifest-xml/" title="使用 sourceSets 管理风味特定的 AndroidManifest.xml"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_59.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-04</div><div class="title">使用 sourceSets 管理风味特定的 AndroidManifest.xml</div></div></a></div><div><a href="/2022/08/06/%E4%BB%BF%E5%A2%A8%E8%BF%B924%E5%B0%8F%E6%97%B6%E5%A4%A9%E6%B0%94%E8%87%AA%E5%AE%9A%E4%B9%89View/" title="仿墨迹24小时天气自定义View"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_44.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-06</div><div class="title">仿墨迹24小时天气自定义View</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/img/loading.gif" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LazyIonEs</div><div class="author-info__description">学习Android两年半的Android开发实习生</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lazyiones" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lazyiones@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">如果阅读过程中遇到了问题，请及时评论或者留言，看到了会在第一时间给出回复。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Camera-Initialization"><span class="toc-number">1.</span> <span class="toc-text">Camera Initialization</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Camera-Lifecycle"><span class="toc-number">2.</span> <span class="toc-text">Camera Lifecycle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Camera-Control"><span class="toc-number">3.</span> <span class="toc-text">Camera Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zoom"><span class="toc-number">3.1.</span> <span class="toc-text">- Zoom</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Focus-Metering"><span class="toc-number">3.2.</span> <span class="toc-text">- Focus&#x2F;Metering</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Camera-Selection"><span class="toc-number">4.</span> <span class="toc-text">Camera Selection</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Camera-Use-Cases"><span class="toc-number">5.</span> <span class="toc-text">Camera Use Cases</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preview"><span class="toc-number">5.1.</span> <span class="toc-text">- Preview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImageAnalysis"><span class="toc-number">5.2.</span> <span class="toc-text">- ImageAnalysis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImageCapture"><span class="toc-number">5.3.</span> <span class="toc-text">- ImageCapture</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">6.</span> <span class="toc-text">Conclusion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_30.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX CameraController"/></a><div class="content"><a class="title" href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController">Android CameraX CameraController</a><time datetime="2023-08-30T11:14:58.000Z" title="发表于 2023-08-30 19:14:58">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_55.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HomeBrew 常用指令"/></a><div class="content"><a class="title" href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令">HomeBrew 常用指令</a><time datetime="2023-08-30T10:50:42.000Z" title="发表于 2023-08-30 18:50:42">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_20.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX中使用Camera2"/></a><div class="content"><a class="title" href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2">Android CameraX中使用Camera2</a><time datetime="2023-08-15T01:39:50.000Z" title="发表于 2023-08-15 09:39:50">2023-08-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/14/Android-CameraX%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Android CameraX的基本使用"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_30.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX的基本使用"/></a><div class="content"><a class="title" href="/2023/08/14/Android-CameraX%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Android CameraX的基本使用">Android CameraX的基本使用</a><time datetime="2023-08-14T11:31:06.000Z" title="发表于 2023-08-14 19:31:06">2023-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/04/%E4%BD%BF%E7%94%A8-sourceSets-%E7%AE%A1%E7%90%86%E9%A3%8E%E5%91%B3%E7%89%B9%E5%AE%9A%E7%9A%84-AndroidManifest-xml/" title="使用 sourceSets 管理风味特定的 AndroidManifest.xml"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_59.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 sourceSets 管理风味特定的 AndroidManifest.xml"/></a><div class="content"><a class="title" href="/2023/08/04/%E4%BD%BF%E7%94%A8-sourceSets-%E7%AE%A1%E7%90%86%E9%A3%8E%E5%91%B3%E7%89%B9%E5%AE%9A%E7%9A%84-AndroidManifest-xml/" title="使用 sourceSets 管理风味特定的 AndroidManifest.xml">使用 sourceSets 管理风味特定的 AndroidManifest.xml</a><time datetime="2023-08-04T03:57:22.000Z" title="发表于 2023-08-04 11:57:22">2023-08-04</time></div></div></div></div></div></div></main><footer id="footer" style="background: url(/img/footer_bg.png)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By LazyIonEs</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline.lazyiones.top',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: true,
+    }, null))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script id="canvas_nest" defer="defer" color="42,81,144" opacity="1" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
