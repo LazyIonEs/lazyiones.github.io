@@ -5,15 +5,15 @@
 <meta property="og:site_name" content="LazyIonEs">
 <meta property="og:description" content="文章很长，主要从两方面说起：  1，安卓View的绘制流程（比较简单，想要深入的可以去看源码） 2，安卓自定义View的绘制步骤  自定义View是一个老生常谈的问题，对于一个Android开发者来说是必须掌握的知识点，也是Android开发进阶的必经之路。 要想安卓理解自定义View的流程，首先我们要了解View的绘制流程。分析之前，我们先来看底下面这张图： View的绘制流程 DecorVie">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.lazyiones.top/img/cover/img_cover_31.png">
+<meta property="og:image" content="https://blog.lazyiones.top/img/cover/img_cover_87.png">
 <meta property="article:published_time" content="2023-12-23T08:14:46.000Z">
-<meta property="article:modified_time" content="2024-01-11T13:21:49.645Z">
+<meta property="article:modified_time" content="2024-01-12T02:28:41.485Z">
 <meta property="article:author" content="LazyIonEs">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="自定义View">
 <meta property="article:tag" content="天气">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.lazyiones.top/img/cover/img_cover_31.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.lazyiones.top/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://blog.lazyiones.top/img/cover/img_cover_87.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.lazyiones.top/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
@@ -58,7 +58,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-01-11 21:21:49'
+  postUpdate: '2024-01-12 10:28:41'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -174,7 +174,7 @@
         }
       }
       detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/img/loading.gif" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/top_banner_2.png')"><nav id="nav"><span id="blog-info"><a href="/" title="LazyIonEs"><span class="site-name">LazyIonEs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">自定义View的流程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-23T08:14:46.000Z" title="发表于 2023-12-23 16:14:46">2023-12-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-11T13:21:49.645Z" title="更新于 2024-01-11 21:21:49">2024-01-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="自定义View的流程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/#post-comment"><span class="waline-comment-count" data-path="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>文章很长，主要从两方面说起：</strong></p>
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/img/loading.gif" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/top_banner_2.png')"><nav id="nav"><span id="blog-info"><a href="/" title="LazyIonEs"><span class="site-name">LazyIonEs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">自定义View的流程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-23T08:14:46.000Z" title="发表于 2023-12-23 16:14:46">2023-12-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-12T02:28:41.485Z" title="更新于 2024-01-12 10:28:41">2024-01-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="自定义View的流程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/#post-comment"><span class="waline-comment-count" data-path="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>文章很长，主要从两方面说起：</strong></p>
 <blockquote>
 <p>1，安卓View的绘制流程（比较简单，想要深入的可以去看源码）</p>
 <p>2，安卓自定义View的绘制步骤</p>
@@ -182,13 +182,13 @@
 <p>自定义View是一个老生常谈的问题，对于一个Android开发者来说是必须掌握的知识点，也是Android开发进阶的必经之路。</p>
 <p>要想安卓理解自定义View的流程，首先我们要了解View的绘制流程。分析之前，我们先来看底下面这张图：</p>
 <h2 id="View的绘制流程"><a href="#View的绘制流程" class="headerlink" title="View的绘制流程"></a>View的绘制流程</h2><p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2023/12/23/NJgALn3e2IDs7p8.webp" alt="绘制流程图"></p>
-<p><code>DecorView</code>是一个应用窗口的根容器，它本质上是一个<code>FrameLayout</code>。<code>DecorView</code>有唯一一个子View，它是一个垂直<code>LinearLayout</code>，包含两个子元素，一个是<code>TitleView</code>（<code>ActionBar</code>的容器），另一个是<code>ContentView</code>（窗口内容的容器）。关于<code>ContentView</code>，它是一个<code>FrameLayout（android.R.id.content)</code>，我们平常用的<code>setContentView</code>就是设置它的子View。上图还表达了每个<code>Activity</code>都与一个<code>Window</code>（具体来说是<code>PhoneWindow</code>）相关联，用户界面则由<code>Window</code>所承载。</p>
+<p><code>DecorView</code>是一个应用窗口的根容器，它本质上是一个<code>FrameLayout</code>。<code>DecorView</code>有唯一一个子View，它是一个垂直<code>LinearLayout</code>，包含两个子元素，一个是<code>TitleView</code>（<code>ActionBar</code>的容器），另一个是<code>ContentView</code>（窗口内容的容器）。关于<code>ContentView</code>，它是一个<code>FrameLayout（android.R.id.content)</code>，我们平常用的<code>setContentView</code>就是设置它的子View。上图还表达了每个Activity都与一个Window（具体来说是<code>PhoneWindow</code>）相关联，用户界面则由Window所承载。</p>
 <h2 id="ViewRoot"><a href="#ViewRoot" class="headerlink" title="ViewRoot"></a>ViewRoot</h2><p>在介绍View的绘制前，首先我们需要知道是谁负责执行View绘制的整个流程。实际上，View的绘制是由<code>ViewRoot</code>来负责的。每个应用程序窗口的<code>decorView</code>都有一个与之关联的<code>ViewRoot</code>对象，这种关联关系是由<code>WindowManager</code>来维护的。</p>
-<p>那么<code>decorView</code>与<code>ViewRoot</code>的关联关系是在什么时候建立的呢？答案是<code>Activity</code>启动时，<code>ActivityThread.handleResumeActivity()</code>方法中建立了它们两者的关联关系。这里我们不具体分析它们建立关联的时机与方式，感兴趣的同学可以参考相关源码。下面我们直入主题，分析一下ViewRoot是如何完成View的绘制的。</p>
-<h2 id="View绘制的起点"><a href="#View绘制的起点" class="headerlink" title="View绘制的起点"></a>View绘制的起点</h2><p>当建立好了<code>decorView</code>与<code>ViewRoot</code>的关联后，<code>ViewRoot</code>类的<code>requestLayout()</code>方法会被调用，以完成应用程序用户界面的初次布局。实际被调用的是<code>ViewRootImpl</code>类的<code>requestLayout()</code>方法，这个方法的源码如下：</p>
+<p>那么decorView与ViewRoot的关联关系是在什么时候建立的呢？答案是Activity启动时，<code>ActivityThread.handleResumeActivity()</code>方法中建立了它们两者的关联关系。这里我们不具体分析它们建立关联的时机与方式，感兴趣的同学可以参考相关源码。下面我们直入主题，分析一下ViewRoot是如何完成View的绘制的。</p>
+<h2 id="View绘制的起点"><a href="#View绘制的起点" class="headerlink" title="View绘制的起点"></a>View绘制的起点</h2><p>当建立好了decorView与ViewRoot的关联后，ViewRoot类的<code>requestLayout()</code>方法会被调用，以完成应用程序用户界面的初次布局。实际被调用的是ViewRootImpl类的<code>requestLayout()</code>方法，这个方法的源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestLayout</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!mHandlingLayoutInLayoutRequest) &#123;</span><br><span class="line">    <span class="comment">// 检查发起布局请求的线程是否为主线程 </span></span><br><span class="line">    checkThread();</span><br><span class="line">    mLayoutRequested = <span class="literal">true</span>;</span><br><span class="line">    scheduleTraversals();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>上面的方法中调用了<code>scheduleTraversals()</code>方法来调度一次完成的绘制流程，该方法会向主线程发送一个“遍历”消息，最终会导致<code>ViewRootImpl</code>的<code>performTraversals()</code>方法被调用。下面，我们以<code>performTraversals()</code>为起点，来分析View的整个绘制流程。</p>
+<p>上面的方法中调用了<code>scheduleTraversals()</code>方法来调度一次完成的绘制流程，该方法会向主线程发送一个“遍历”消息，最终会导致ViewRootImpl的<code>performTraversals()</code>方法被调用。下面，我们以<code>performTraversals()</code>为起点，来分析View的整个绘制流程。</p>
 <h2 id="三个阶段"><a href="#三个阶段" class="headerlink" title="三个阶段"></a>三个阶段</h2><p>View的整个绘制流程可以分为以下三个阶段：</p>
 <ul>
 <li><code>measure</code>: 判断是否需要重新计算View的大小，需要的话则计算；</li>
@@ -197,23 +197,23 @@
 </ul>
 <p>这三个子阶段可以用下图来描述：</p>
 <p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2023/12/23/LjeZRw3DlMuNETr.png" alt="img"></p>
-<h3 id="measure阶段"><a href="#measure阶段" class="headerlink" title="measure阶段"></a>measure阶段</h3><p>此阶段的目的是计算出控件树中的各个控件要显示其内容的话，需要多大尺寸。起点是<code>ViewRootImpl</code>的<code>measureHierarchy()</code>方法，这个方法的源码如下：</p>
+<h3 id="measure阶段"><a href="#measure阶段" class="headerlink" title="measure阶段"></a>measure阶段</h3><p>此阶段的目的是计算出控件树中的各个控件要显示其内容的话，需要多大尺寸。起点是ViewRootImpl的<code>measureHierarchy()</code>方法，这个方法的源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">measureHierarchy</span><span class="params">(<span class="keyword">final</span> View host, <span class="keyword">final</span> WindowManager.LayoutParams lp, <span class="keyword">final</span> Resources res,</span></span><br><span class="line"><span class="params">    <span class="keyword">final</span> <span class="type">int</span> desiredWindowWidth, <span class="keyword">final</span> <span class="type">int</span> desiredWindowHeight)</span> &#123;</span><br><span class="line">  <span class="comment">// 传入的desiredWindowXxx为窗口尺寸</span></span><br><span class="line">  <span class="type">int</span> childWidthMeasureSpec;</span><br><span class="line">  <span class="type">int</span> childHeightMeasureSpec;</span><br><span class="line">  <span class="type">boolean</span> <span class="variable">windowSizeMayChange</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">  . . .</span><br><span class="line">  <span class="type">boolean</span> <span class="variable">goodMeasure</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">if</span> (!goodMeasure) &#123;</span><br><span class="line">    childWidthMeasureSpec = getRootMeasureSpec(desiredWindowWidth, lp.width);</span><br><span class="line">    childHeightMeasureSpec = getRootMeasureSpec(desiredWindowHeight, lp.height);</span><br><span class="line">    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (mWidth != host.getMeasuredWidth() || mHeight != host.getMeasuredHeight()) &#123;</span><br><span class="line">      windowSizeMayChange = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> windowSizeMayChange;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>上面的代码中调用<code>getRootMeasureSpec()</code>方法来获取根<code>MeasureSpec</code>，这个根<code>MeasureSpec</code>代表了对<code>decorView</code>的宽高的约束信息。具体的内部方法可以直接再AS进行查看，不再赘述。</p>
-<h2 id="layout阶段"><a href="#layout阶段" class="headerlink" title="layout阶段"></a>layout阶段</h2><p><code>layout</code>阶段的基本思想也是由根View开始，递归地完成整个控件树的布局（<code>layout</code>）工作。</p>
-<h3 id="View-layout"><a href="#View-layout" class="headerlink" title="View.layout()"></a>View.layout()</h3><p>我们把对<code>decorView</code>的<code>layout()</code>方法的调用作为布局整个控件树的起点，实际上调用的是View类的<code>layout()</code>方法，源码如下：</p>
+<p>上面的代码中调用<code>getRootMeasureSpec()</code>方法来获取根<code>MeasureSpec</code>，这个根<code>MeasureSpec</code>代表了对decorView的宽高的约束信息。具体的内部方法可以直接再AS进行查看，不再赘述。</p>
+<h3 id="layout阶段"><a href="#layout阶段" class="headerlink" title="layout阶段"></a>layout阶段</h3><p><code>layout</code>阶段的基本思想也是由根View开始，递归地完成整个控件树的布局（<code>layout</code>）工作。</p>
+<h4 id="View-layout"><a href="#View-layout" class="headerlink" title="View.layout()"></a>View.layout()</h4><p>我们把对decorView的<code>layout()</code>方法的调用作为布局整个控件树的起点，实际上调用的是View类的<code>layout()</code>方法，源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">layout</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> t, <span class="type">int</span> r, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="comment">// l为本View左边缘与父View左边缘的距离</span></span><br><span class="line">    <span class="comment">// t为本View上边缘与父View上边缘的距离</span></span><br><span class="line">    <span class="comment">// r为本View右边缘与父View左边缘的距离</span></span><br><span class="line">    <span class="comment">// b为本View下边缘与父View上边缘的距离</span></span><br><span class="line">    . . .</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">changed</span> <span class="operator">=</span> isLayoutModeOptical(mParent) ?            setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);</span><br><span class="line">    <span class="keyword">if</span> (changed || (mPrivateFlags &amp; PFLAG_LAYOUT_REQUIRED) == PFLAG_LAYOUT_REQUIRED) &#123;</span><br><span class="line">        onLayout(changed, l, t, r, b);</span><br><span class="line">        . . .</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">    . . .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这个方法会调用<code>setFrame()</code>方法来设置View的<code>mLeft</code>、<code>mTop</code>、<code>mRight</code>和<code>mBottom</code>四个参数，这四个参数描述了View相对其父View的位置（分别赋值为l, t, r, b），在<code>setFrame()</code>方法中会判断View的位置是否发生了改变，若发生了改变，则需要对子View进行重新布局，对子View的局部是通过<code>onLayout()</code>方法实现了。由于普通View（ 非<code>ViewGroup</code>）不含子View，所以View类的<code>onLayout()</code>方法为空。可以通过源码查看<code>ViewGroup</code>类的onLayout()方法的实现，不再赘述。</p>
-<h2 id="draw阶段"><a href="#draw阶段" class="headerlink" title="draw阶段"></a>draw阶段</h2><p>对于本阶段的分析，我们以<code>decorView.draw()</code>作为分析的起点，也就是<code>View.draw()</code>方法，它的源码如下：</p>
+<p>这个方法会调用<code>setFrame()</code>方法来设置View的<code>mLeft</code>、<code>mTop</code>、<code>mRight</code>和<code>mBottom</code>四个参数，这四个参数描述了View相对其父View的位置（分别赋值为l, t, r, b），在<code>setFrame()</code>方法中会判断View的位置是否发生了改变，若发生了改变，则需要对子View进行重新布局，对子View的局部是通过<code>onLayout()</code>方法实现了。由于普通View（ 非ViewGroup）不含子View，所以View类的<code>onLayout()</code>方法为空。可以通过源码查看ViewGroup类的onLayout()方法的实现，不再赘述。</p>
+<h3 id="draw阶段"><a href="#draw阶段" class="headerlink" title="draw阶段"></a>draw阶段</h3><p>对于本阶段的分析，我们以<code>decorView.draw()</code>作为分析的起点，也就是<code>View.draw()</code>方法，它的源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">draw</span><span class="params">(Canvas canvas)</span> &#123;</span><br><span class="line">  . . .</span><br><span class="line">  <span class="comment">// 绘制背景，只有dirtyOpaque为false时才进行绘制，下同</span></span><br><span class="line">  <span class="type">int</span> saveCount;</span><br><span class="line">  <span class="keyword">if</span> (!dirtyOpaque) &#123;</span><br><span class="line">    drawBackground(canvas);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  . . .</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 绘制自身内容</span></span><br><span class="line">  <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 绘制子View</span></span><br><span class="line">  dispatchDraw(canvas);</span><br><span class="line"> </span><br><span class="line">   . . .</span><br><span class="line">  <span class="comment">// 绘制滚动条等</span></span><br><span class="line">  onDrawForeground(canvas);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>简单起见，在上面的代码中我们省略了实现滑动时渐变边框效果相关的逻辑。实际上，View类的<code>onDraw()</code>方法为空，因为每个View绘制自身的方式都不尽相同，对于<code>decorView</code>来说，由于它是容器View，所以它本身并没有什么要绘制的。<code>dispatchDraw()</code>方法用于绘制子View，显然普通View（非<code>ViewGroup</code>）并不能包含子View，所以View类中这个方法的实现为空。</p>
-<p><code>ViewGroup</code>类的<code>dispatchDraw()</code>方法中会依次调用<code>drawChild()</code>方法来绘制子View，<code>drawChild()</code>方法的源码如下：</p>
+<p>简单起见，在上面的代码中我们省略了实现滑动时渐变边框效果相关的逻辑。实际上，View类的<code>onDraw()</code>方法为空，因为每个View绘制自身的方式都不尽相同，对于decorView来说，由于它是容器View，所以它本身并没有什么要绘制的。<code>dispatchDraw()</code>方法用于绘制子View，显然普通View（非ViewGroup）并不能包含子View，所以View类中这个方法的实现为空。</p>
+<p>ViewGroup类的<code>dispatchDraw()</code>方法中会依次调用<code>drawChild()</code>方法来绘制子View，<code>drawChild()</code>方法的源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">drawChild</span><span class="params">(Canvas canvas, View child, <span class="type">long</span> drawingTime)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> child.draw(canvas, <span class="built_in">this</span>, drawingTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这个方法调用了<code>View.draw(Canvas, ViewGroup，long)</code>方法来对子View进行绘制。在<code>draw(Canvas, ViewGroup, long)</code>方法中，首先对<code>canvas</code>进行了一系列变换，以变换到将要被绘制的View的坐标系下。完成对<code>canvas</code>的变换后，便会调用<code>View.draw(Canvas)</code>方法进行实际的绘制工作，此时传入的<code>canvas</code>为经过变换的，在将被绘制View的坐标系下的<code>canvas</code>。</p>
+<p>这个方法调用了<code>View.draw(Canvas, ViewGroup，long)</code>方法来对子View进行绘制。在<code>draw(Canvas, ViewGroup, long)</code>方法中，首先对canvas进行了一系列变换，以变换到将要被绘制的View的坐标系下。完成对canvas的变换后，便会调用<code>View.draw(Canvas)</code>方法进行实际的绘制工作，此时传入的canvas为经过变换的，在将被绘制View的坐标系下的canvas。</p>
 <p>进入到<code>View.draw(Canvas)</code>方法后，会向之前介绍的一样，执行以下几步：</p>
 <ul>
 <li>绘制背景;</li>
@@ -281,7 +281,7 @@
 
 <p>　　可以看出来，除了将命名空间的名称从android改成app之外，就是将最后的<code>&quot;res/android&quot;</code>改成了<code>&quot;res-auto&quot;</code>。</p>
 <p>　　<strong>注意：</strong>自定义<code>namespace</code>的名称可以自己定义，不一定非得是app。</p>
-<h3 id="获取自定义属性"><a href="#获取自定义属性" class="headerlink" title="获取自定义属性"></a>获取自定义属性</h3><p>在自定义<code>View / ViewGroup</code>中，我们可以通过<code>TypedArray</code>获取到自定义的属性。示例代码如下：</p>
+<h3 id="获取自定义属性"><a href="#获取自定义属性" class="headerlink" title="获取自定义属性"></a>获取自定义属性</h3><p>在自定义View &#x2F; ViewGroup中，我们可以通过<code>TypedArray</code>获取到自定义的属性。示例代码如下：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(context: Context, attrs: AttributeSet?, defStyleAttr: <span class="built_in">Int</span>) : <span class="keyword">super</span>(context, attrs, defStyleAttr) &#123;</span><br><span class="line">    <span class="keyword">val</span> typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView)</span><br><span class="line">    mDrawable = typedArray.getDrawable(R.styleable.CustomView_src_rotate)</span><br><span class="line">    mStart = typedArray.getInteger(R.styleable.RotateShifter_start, <span class="number">0</span>)</span><br><span class="line">    typedArray.recycle()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -292,7 +292,7 @@
 <h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><p>　　当我们定义一个新的类继承了View或ViewGroup时，系统都会提示我们重写它的构造方法。View &#x2F; ViewGroup中又四个构造方法可以重写，它们分别有一、二、三、四个参数。四个参数的构造方法我们通常用不到，因此这个章节中我们主要介绍一个参数、两个参数和三个参数的构造方法（这里以<code>CustomView</code>控件为例）。</p>
 <h4 id="一个参数的构造方法"><a href="#一个参数的构造方法" class="headerlink" title="一个参数的构造方法"></a>一个参数的构造方法</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(context: Context) : <span class="keyword">super</span>(context)</span><br></pre></td></tr></table></figure>
 
-<p>　　这个构造方法只有一个参数Context上下文。当我们在JAVA代码中直接通过new关键在创建这个控件时，就会调用这个方法。</p>
+<p>　　这个构造方法只有一个参数Context上下文。当我们在Java&#x2F;Kotlin代码中直接创建这个控件时，就会调用这个方法。</p>
 <h4 id="两个参数的构造方法"><a href="#两个参数的构造方法" class="headerlink" title="两个参数的构造方法"></a>两个参数的构造方法</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(context: Context, attrs: AttributeSet?) : <span class="keyword">super</span>(context, attrs)</span><br></pre></td></tr></table></figure>
 
 <p>　　这个构造方法有两个参数：<code>Context</code>上下文和<code>AttributeSet</code>属性集。当我们需要在自定义控件中获取属性时，就默认调用这个构造方法。<code>AttributeSet</code>对象就是这个控件中定义的所有属性。</p>
@@ -303,7 +303,7 @@
 <p>　　这个构造方法中有三个参数：<code>Context</code>上下文、<code>AttributeSet</code>属性集和<code>defStyleAttr</code>自定义属性的引用。这个构造方法不会默认调用，必须要手动调用，这个构造方法和两个参数的构造方法的唯一区别就是这个构造方法给我们默认传入了一个默认属性集。</p>
 <p>　　<code>defStyleAttr</code>指向的是自定义属性的标签中定义的自定义属性集，我们在创建<code>TypedArray</code>对象时需要用到<code>defStyleAttr</code>。</p>
 <h4 id="三个构造方法的整合"><a href="#三个构造方法的整合" class="headerlink" title="三个构造方法的整合"></a>三个构造方法的整合</h4><p>　　一般情况下，我们会将这三个构造方法串联起来，即层层调用，让最终的业务处理都集中在三个参数的构造方法。我们让一参的构造方法引用两参的构造方法，两参的构造方法引用三参的构造方法。示例代码如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomView</span> : <span class="type">View</span> &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(context: Context) : <span class="keyword">super</span>(context)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(context: Context, attrs: AttributeSet?) : <span class="keyword">super</span>(context, attrs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(context: Context, attrs: AttributeSet?, defStyleAttr: <span class="built_in">Int</span>) : <span class="keyword">super</span>(context, attrs, defStyleAttr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomView</span> : <span class="type">View</span> &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(context: Context) : <span class="keyword">this</span>(context, <span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(context: Context, attrs: AttributeSet?) : <span class="keyword">this</span>(context, attrs, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(context: Context, attrs: AttributeSet?, defStyleAttr: <span class="built_in">Int</span>) : <span class="keyword">super</span>(context, attrs, defStyleAttr) &#123;</span><br><span class="line">        <span class="comment">// 业务代码</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -311,76 +311,393 @@
 <h3 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure()"></a>onMeasure()</h3><p>　　<code>onMeasure()</code>方法中主要负责测量，决定控件本身或其子控件所占的宽高。我们可以通过<code>onMeasure()</code>方法提供的参数<code>widthMeasureSpec</code>和<code>heightMeasureSpec</code>来分别获取控件宽度和高度的<strong>测量模式</strong>和<strong>测量值</strong>（测量 &#x3D; 测量模式 + 测量值）。</p>
 <p>　　<code>widthMeasureSpec</code>和<code>heightMeasureSpec</code>虽然只是int类型的值，但它们是通过<code>MeasureSpec</code>类进行了编码处理的，其中封装了测量模式和测量值，因此我们可以分别通过<code>MeasureSpec.getMode(xMeasureSpec)</code>和<code>MeasureSpec. getSize(xMeasureSpec)</code>来获取到控件或其子View的测量模式和测量值。</p>
 <p>　　<strong>测量模式分为以下三种情况：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXACTLY：当宽高值设置为具体值时使用，如100DIP、match_parent等，此时取出的size是精确的尺寸；</span><br><span class="line">AT_MOST：当宽高值设置为wrap_content时使用，此时取出的size是控件最大可获得的空间；</span><br><span class="line">UNSPECIFIED：当没有指定宽高值时使用（很少见）。</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">测量模式</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>EXACTLY</code></td>
+<td align="center">当宽高值设置为具体值时使用，如100DIP、match_parent等，此时取出的size是精确的尺寸</td>
+</tr>
+<tr>
+<td align="center"><code>AT_MOST</code></td>
+<td align="center">当宽高值设置为wrap_content时使用，此时取出的size是控件最大可获得的空间</td>
+</tr>
+<tr>
+<td align="center"><code>UNSPECIFIED</code></td>
+<td align="center">当没有指定宽高值时使用（很少见）</td>
+</tr>
+</tbody></table>
 <p>　　<strong>onMeasure()方法中常用的方法：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getChildCount()：获取子View的数量；</span><br><span class="line">getChildAt(i)：获取第i个子控件；</span><br><span class="line">subView.getLayoutParams().width/height：设置或获取子控件的宽或高；</span><br><span class="line">measureChild(child, widthMeasureSpec, heightMeasureSpec)：测量子View的宽高；</span><br><span class="line">child.getMeasuredHeight/width()：执行完measureChild()方法后就可以通过这种方式获取子View的宽高值；</span><br><span class="line">getPaddingLeft/Right/Top/Bottom()：获取控件的四周内边距；</span><br><span class="line">setMeasuredDimension(width, height)：重新设置控件的宽高。如果写了这句代码，就需要删除“<span class="built_in">super</span>. onMeasure(widthMeasureSpec, heightMeasureSpec);”这行代码。</span><br></pre></td></tr></table></figure>
-
-
-
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>getChildCount()</code></td>
+<td align="center">获取子View的数量</td>
+</tr>
+<tr>
+<td align="center"><code>getChildAt(i)</code></td>
+<td align="center">获取第i个子控件</td>
+</tr>
+<tr>
+<td align="center"><code>subView.getLayoutParams().width/height</code></td>
+<td align="center">设置或获取子控件的宽或高</td>
+</tr>
+<tr>
+<td align="center"><code>measureChild(child, widthMeasureSpec, heightMeasureSpec)</code></td>
+<td align="center">测量子View的宽高</td>
+</tr>
+<tr>
+<td align="center"><code>child.getMeasuredHeight/width()</code></td>
+<td align="center">执行完<code>measureChild()</code>方法后就可以通过这种方式获取子View的宽高值</td>
+</tr>
+<tr>
+<td align="center"><code>getPaddingLeft/Right/Top/Bottom()</code></td>
+<td align="center">获取控件的四周内边距</td>
+</tr>
+<tr>
+<td align="center"><code>setMeasuredDimension(width, height)</code></td>
+<td align="center">重新设置控件的宽高。如果写了这句代码，就需要删除<code>super.onMeasure(widthMeasureSpec, heightMeasureSpec)</code>这行代码</td>
+</tr>
+</tbody></table>
 <p><strong>注意：</strong><code>onMeasure()</code>方法可能被调用多次，这是因为控件中的内容或子<code>View</code>可能对分配给自己的空间“不满意”，因此向父空间申请重新分配空间。</p>
 <h3 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw()"></a>onDraw()</h3><p>　　<code>onDraw()</code>方法负责绘制，即如果我们希望得到的效果在Android原生控件中没有现成的支持，那么我们就需要自己绘制我们的自定义控件的显示效果。</p>
 <p>　　要学习<code>onDraw()</code>方法，我们就需要学习在<code>onDraw()</code>方法中使用最多的两个类：<code>Paint</code>和<code>Canvas</code>。</p>
-<p>　　<strong>注意：</strong>每次触摸了自定义<code>View/ViewGroup</code>时都会触发<code>onDraw()</code>方法。</p>
+<p>　　<strong>注意：</strong>每次触摸了自定义View&#x2F;ViewGroup时都会触发<code>onDraw()</code>方法。</p>
 <h3 id="Paint类"><a href="#Paint类" class="headerlink" title="Paint类"></a>Paint类</h3><p>　　<code>Paint</code>画笔对象，这个类中包含了如何绘制几何图形、文字和位图的样式和颜色信息，指定了如何绘制文本和图形。画笔对象右很多设置方法，大体上可以分为两类：一类与图形绘制有关，一类与文本绘制有关。</p>
 <p>　　<strong>Paint类中有如下方法：</strong></p>
 <p>　　1、图形绘制：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">setArgb(<span class="type">int</span> a, <span class="type">int</span> r, <span class="type">int</span> g, <span class="type">int</span> b)：设置绘制的颜色，a表示透明度，r、g、b表示颜色值；</span><br><span class="line">setAlpha(<span class="type">int</span> a)：设置绘制的图形的透明度；</span><br><span class="line">setColor(<span class="type">int</span> color)：设置绘制的颜色；</span><br><span class="line">setAntiAlias(<span class="type">boolean</span> a)：设置是否使用抗锯齿功能，抗锯齿功能会消耗较大资源，绘制图形的速度会减慢；</span><br><span class="line">setDither(<span class="type">boolean</span> b)：设置是否使用图像抖动处理，会使图像颜色更加平滑饱满，更加清晰；</span><br><span class="line">setFileterBitmap(Boolean b)：设置是否在动画中滤掉Bitmap的优化，可以加快显示速度；</span><br><span class="line">setMaskFilter(MaskFilter mf)：设置MaskFilter来实现滤镜的效果；</span><br><span class="line">setColorFilter(ColorFilter cf)：设置颜色过滤器，可以在绘制颜色时实现不同颜色的变换效果；</span><br><span class="line">setPathEffect(PathEffect pe)：设置绘制的路径的效果；</span><br><span class="line">setShader(Shader s)：设置Shader绘制各种渐变效果；</span><br><span class="line">setShadowLayer(<span class="type">float</span> r, <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> c)：在图形下面设置阴影层，r为阴影角度，x和y为阴影在x轴和y轴上的距离，c为阴影的颜色；</span><br><span class="line">setStyle(Paint.Style s)：设置画笔的样式：FILL实心；STROKE空心；FILL_OR_STROKE同时实心与空心；</span><br><span class="line">setStrokeCap(Paint.Cap c)：当设置画笔样式为STROKE或FILL_OR_STROKE时，设置笔刷的图形样式；</span><br><span class="line">setStrokeJoin(Paint.Join j)：设置绘制时各图形的结合方式；</span><br><span class="line">setStrokeWidth(<span class="type">float</span> w)：当画笔样式为STROKE或FILL_OR_STROKE时，设置笔刷的粗细度；</span><br><span class="line">setXfermode(Xfermode m)：设置图形重叠时的处理方式；</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>setArgb(int a, int r, int g, int b)</code></td>
+<td align="center">设置绘制的颜色，a表示透明度，r、g、b表示颜色值</td>
+</tr>
+<tr>
+<td align="center"><code>setAlpha(int a)</code></td>
+<td align="center">设置绘制的图形的透明度</td>
+</tr>
+<tr>
+<td align="center"><code>setColor(int color)</code></td>
+<td align="center">设置绘制的颜色</td>
+</tr>
+<tr>
+<td align="center"><code>setAntiAlias(boolean a)</code></td>
+<td align="center">设置是否使用抗锯齿功能，抗锯齿功能会消耗较大资源，绘制图形的速度会减慢</td>
+</tr>
+<tr>
+<td align="center"><code>setDither(boolean b)</code></td>
+<td align="center">设置是否使用图像抖动处理，会使图像颜色更加平滑饱满，更加清晰</td>
+</tr>
+<tr>
+<td align="center"><code>setFileterBitmap(Boolean b)</code></td>
+<td align="center">设置是否在动画中滤掉Bitmap的优化，可以加快显示速度</td>
+</tr>
+<tr>
+<td align="center"><code>setMaskFilter(MaskFilter mf)</code></td>
+<td align="center">设置MaskFilter来实现滤镜的效果</td>
+</tr>
+<tr>
+<td align="center"><code>setColorFilter(ColorFilter cf)</code></td>
+<td align="center">设置颜色过滤器，可以在绘制颜色时实现不同颜色的变换效果</td>
+</tr>
+<tr>
+<td align="center"><code>setPathEffect(PathEffect pe)</code></td>
+<td align="center">设置绘制的路径的效果</td>
+</tr>
+<tr>
+<td align="center"><code>setShader(Shader s)</code></td>
+<td align="center">设置Shader绘制各种渐变效果</td>
+</tr>
+<tr>
+<td align="center"><code>setShadowLayer(float r, int x, int y, int c)</code></td>
+<td align="center">在图形下面设置阴影层，r为阴影角度，x和y为阴影在x轴和y轴上的距离，c为阴影的颜色</td>
+</tr>
+<tr>
+<td align="center"><code>setStyle(Paint.Style s)</code></td>
+<td align="center">设置画笔的样式：<code>FILL</code>实心&#x2F;填充；<code>STROKE</code>空心&#x2F;描边；<code>FILL_OR_STROKE</code>同时填充与描边</td>
+</tr>
+<tr>
+<td align="center">setStrokeCap(Paint.Cap c)</td>
+<td align="center">当设置画笔<code>Style</code>为<code>STROKE</code>或<code>FILL_OR_STROKE</code>时，设置笔刷的图形样式：<code>ROUND</code> 圆头，<code>BUTT</code> 平头，<code>SQUARE</code> 方头</td>
+</tr>
+<tr>
+<td align="center"><code>setStrokeJoin(Paint.Join j)</code></td>
+<td align="center">设置绘制时各图形的结合方式:<code>MITER</code> 尖角、 <code>BEVEL</code> 平角和 <code>ROUND</code> 圆角</td>
+</tr>
+<tr>
+<td align="center"><code>setStrokeWidth(float w)</code></td>
+<td align="center">当画笔<code>Style</code>为<code>STROKE</code>或<code>FILL_OR_STROKE</code>时，设置笔刷的粗细度</td>
+</tr>
+<tr>
+<td align="center"><code>setXfermode(Xfermode m)</code></td>
+<td align="center">设置图形重叠时的处理方式</td>
+</tr>
+</tbody></table>
 <p>　　2、文本绘制：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">setTextAlign(Path.Align a)：设置绘制的文本的对齐方式；</span><br><span class="line">setTextScaleX(<span class="type">float</span> s)：设置文本在X轴的缩放比例，可以实现文字的拉伸效果；</span><br><span class="line">setTextSize(<span class="type">float</span> s)：设置字号；</span><br><span class="line">setTextSkewX(<span class="type">float</span> s)：设置斜体文字，s是文字倾斜度；</span><br><span class="line">setTypeFace(TypeFace tf)：设置字体风格，包括粗体、斜体等；</span><br><span class="line">setUnderlineText(<span class="type">boolean</span> b)：设置绘制的文本是否带有下划线效果；</span><br><span class="line">setStrikeThruText(<span class="type">boolean</span> b)：设置绘制的文本是否带有删除线效果；</span><br><span class="line">setFakeBoldText(<span class="type">boolean</span> b)：模拟实现粗体文字，如果设置在小字体上效果会非常差；</span><br><span class="line">setSubpixelText(<span class="type">boolean</span> b)：如果设置为<span class="literal">true</span>则有助于文本在LCD屏幕上显示效果；</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>setTextAlign(Path.Align a)</code></td>
+<td align="center">设置绘制的文本的对齐方式：<code>LEFT</code> <code>CETNER</code> 和 <code>RIGHT</code></td>
+</tr>
+<tr>
+<td align="center"><code>setTextScaleX(float s)</code></td>
+<td align="center">设置文本在X轴的缩放比例，可以实现文字的拉伸效果</td>
+</tr>
+<tr>
+<td align="center"><code>setTextSize(float s)</code></td>
+<td align="center">设置字号</td>
+</tr>
+<tr>
+<td align="center"><code>setTextSkewX(float s)</code></td>
+<td align="center">设置斜体文字，s是文字倾斜度</td>
+</tr>
+<tr>
+<td align="center"><code>setTypeFace(TypeFace tf)</code></td>
+<td align="center">设置字体风格，包括粗体、斜体、自定义字体等</td>
+</tr>
+<tr>
+<td align="center"><code>setUnderlineText(boolean b)</code></td>
+<td align="center">设置绘制的文本是否带有下划线效果</td>
+</tr>
+<tr>
+<td align="center"><code>setStrikeThruText(boolean b)</code></td>
+<td align="center">设置绘制的文本是否带有删除线效果</td>
+</tr>
+<tr>
+<td align="center"><code>setFakeBoldText(boolean b)</code></td>
+<td align="center">模拟实现粗体文字，如果设置在小字体上效果会非常差</td>
+</tr>
+<tr>
+<td align="center"><code>setSubpixelText(boolean b)</code></td>
+<td align="center">如果设置为true则有助于文本在LCD屏幕上显示效果</td>
+</tr>
+</tbody></table>
 <p>　　3、其他方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getTextBounds(String t, <span class="type">int</span> s, <span class="type">int</span> e, Rect b)：将页面中t文本从s下标开始到e下标结束的所有字符所占的区域宽高封装到b这个矩形中；</span><br><span class="line">clearShadowLayer()：清除阴影层；</span><br><span class="line">measureText(String t, <span class="type">int</span> s, <span class="type">int</span> e)：返回t文本中从s下标开始到e下标结束的所有字符所占的宽度；</span><br><span class="line">reset()：重置画笔为默认值。</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>getTextBounds(String t, int s, int e, Rect b)</code></td>
+<td align="center">将页面中t文本从s下标开始到e下标结束的所有字符所占的区域宽高封装到b这个矩形中</td>
+</tr>
+<tr>
+<td align="center"><code>clearShadowLayer()</code></td>
+<td align="center">清除阴影层</td>
+</tr>
+<tr>
+<td align="center"><code>measureText(String t, int s, int e)</code></td>
+<td align="center">返回t文本中从s下标开始到e下标结束的所有字符所占的宽度</td>
+</tr>
+<tr>
+<td align="center"><code>reset()</code></td>
+<td align="center">重置画笔为默认值</td>
+</tr>
+</tbody></table>
 <p>　　<strong>这里需要就几个方法解释一下：</strong></p>
 <p>1、<code>setPathEffect(PathEffect pe)</code>：设置绘制的路径的效果：</p>
 <p>　　常见的有以下几种可选方案：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CornerPathEffect：可以用圆角来代替尖锐的角；</span><br><span class="line">DathPathEffect：虚线，由短线和点组成；</span><br><span class="line">DiscretePathEffect：荆棘状的线条；</span><br><span class="line">PathDashPathEffect：定义一种新的形状并将其作为原始路径的轮廓标记；</span><br><span class="line">SumPathEffect：在一条路径中顺序添加参数中的效果；</span><br><span class="line">ComposePathEffect：将两种效果组合起来，先使用第一种效果，在此基础上应用第二种效果。</span><br></pre></td></tr></table></figure>
-
-
-
+<table>
+<thead>
+<tr>
+<th align="center">类</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>CornerPathEffect</code></td>
+<td align="center">可以用圆角来代替尖锐的角</td>
+</tr>
+<tr>
+<td align="center"><code>DathPathEffect</code></td>
+<td align="center">虚线，由短线和点组成</td>
+</tr>
+<tr>
+<td align="center"><code>DiscretePathEffect</code></td>
+<td align="center">把线条进行随机的偏离，让轮廓变得乱七八糟</td>
+</tr>
+<tr>
+<td align="center"><code>PathDashPathEffect</code></td>
+<td align="center">定义一种新的形状并将其作为原始路径的轮廓标记</td>
+</tr>
+<tr>
+<td align="center"><code>SumPathEffect</code></td>
+<td align="center">在一条路径中顺序添加参数中的效果</td>
+</tr>
+<tr>
+<td align="center"><code>ComposePathEffect</code></td>
+<td align="center">将两种效果组合起来，先使用第一种效果，在此基础上应用第二种效果</td>
+</tr>
+</tbody></table>
 <p>2、<code>setXfermode(Xfermode m)</code>：设置图形重叠时的处理方式：</p>
 <p>关于<code>Xfermode</code>的多种效果，可以参考下面三张图：</p>
 <p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2023/12/23/OUMk69DnbFzxNdy.jpg"></p>
 <p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2023/12/23/JcnetBqVlU8PpiW.jpg"></p>
 <p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2023/12/23/3gQcleXTxWuatiq.jpg"></p>
 <p>在使用的时候，我们需要通过<code>paint. setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XXX))</code>来设置，XXX是上图中的某种模式对应的常量参数，如<code>DST_OUT</code>。</p>
-<p>　　这16中情况的具体解释如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">PorterDuff.Mode.CLEAR：所绘制不会提交到画布上。</span><br><span class="line">PorterDuff.Mode.SRC：显示上层绘制图片</span><br><span class="line">PorterDuff.Mode.DST：显示下层绘制图片</span><br><span class="line">PorterDuff.Mode.SRC_OVER：正常绘制显示，上下层绘制叠盖。</span><br><span class="line">PorterDuff.Mode.DST_OVER：上下层都显示。下层居上显示。</span><br><span class="line">PorterDuff.Mode.SRC_IN：取两层绘制交集。显示上层。</span><br><span class="line">PorterDuff.Mode.DST_IN：取两层绘制交集。显示下层。</span><br><span class="line">PorterDuff.Mode.SRC_OUT：上层绘制非交集部分。</span><br><span class="line">PorterDuff.Mode.DST_OUT：取下层绘制非交集部分。</span><br><span class="line">PorterDuff.Mode.SRC_ATOP：取下层非交集部分与上层交集部分</span><br><span class="line">PorterDuff.Mode.DST_ATOP：取上层非交集部分与下层交集部分</span><br><span class="line">PorterDuff.Mode.XOR：异或：去除两图层交集部分</span><br><span class="line">PorterDuff.Mode.DARKEN：取两图层全部区域，交集部分颜色加深</span><br><span class="line">PorterDuff.Mode.LIGHTEN：取两图层全部，点亮交集部分颜色</span><br><span class="line">PorterDuff.Mode.MULTIPLY：取两图层交集部分叠加后颜色</span><br><span class="line">PorterDuff.Mode.SCREEN：取两图层全部区域，交集部分变为透明色</span><br></pre></td></tr></table></figure>
-
 <h4 id="Canvas类"><a href="#Canvas类" class="headerlink" title="Canvas类"></a>Canvas类</h4><p>　　<code>Canvas</code>即画布，其上可以使用Paint画笔对象绘制很多东西。</p>
 <p>　　<strong>Canvas对象中可以绘制：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">drawArc()：绘制圆弧；</span><br><span class="line">drawBitmap()：绘制Bitmap图像；</span><br><span class="line">drawCircle()：绘制圆圈；</span><br><span class="line">drawLine()：绘制线条；</span><br><span class="line">drawOval()：绘制椭圆；</span><br><span class="line">drawPath()：绘制Path路径；</span><br><span class="line">drawPicture()：绘制Picture图片；</span><br><span class="line">drawRect()：绘制矩形；</span><br><span class="line">drawRoundRect()：绘制圆角矩形；</span><br><span class="line">drawText()：绘制文本；</span><br><span class="line">drawVertices()：绘制顶点。</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>drawArc()</code></td>
+<td align="center">绘制圆弧</td>
+</tr>
+<tr>
+<td align="center"><code>drawBitmap()</code></td>
+<td align="center">绘制Bitmap图像</td>
+</tr>
+<tr>
+<td align="center"><code>drawCircle()</code></td>
+<td align="center">绘制圆圈</td>
+</tr>
+<tr>
+<td align="center"><code>drawLine()</code></td>
+<td align="center">绘制线条</td>
+</tr>
+<tr>
+<td align="center"><code>drawOval()</code></td>
+<td align="center">绘制椭圆</td>
+</tr>
+<tr>
+<td align="center"><code>drawPath()</code></td>
+<td align="center">绘制Path路径</td>
+</tr>
+<tr>
+<td align="center"><code>drawPicture()</code></td>
+<td align="center">绘制Picture图片</td>
+</tr>
+<tr>
+<td align="center"><code>drawRect()</code></td>
+<td align="center">绘制矩形</td>
+</tr>
+<tr>
+<td align="center"><code>drawRoundRect()</code></td>
+<td align="center">绘制圆角矩形</td>
+</tr>
+<tr>
+<td align="center"><code>drawText()</code></td>
+<td align="center">绘制文本</td>
+</tr>
+<tr>
+<td align="center"><code>drawVertices()</code></td>
+<td align="center">绘制顶点</td>
+</tr>
+</tbody></table>
 <p>　　<strong>Canvas对象的其他方法：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">canvas.save()：把当前绘制的图像保存起来，让后续的操作相当于是在一个新图层上绘制；</span><br><span class="line">canvas.restore()：把当前画布调整到上一个save()之前的状态；</span><br><span class="line">canvas.translate(dx, dy)：把当前画布的原点移到(dx, dy)点，后续操作都以(dx, dy)点作为参照；</span><br><span class="line">canvas.scale(x, y)：将当前画布在水平方向上缩放x倍，竖直方向上缩放y倍；</span><br><span class="line">canvas.rotate(angle)：将当前画布顺时针旋转angle度。</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>canvas.save()</code></td>
+<td align="center">把当前绘制的图像保存起来，让后续的操作相当于是在一个新图层上绘制</td>
+</tr>
+<tr>
+<td align="center"><code>canvas.restore()</code></td>
+<td align="center">把当前画布调整到上一个save()之前的状态</td>
+</tr>
+<tr>
+<td align="center"><code>canvas.translate(dx, dy)</code></td>
+<td align="center">把当前画布的原点移到(dx, dy)点，后续操作都以(dx, dy)点作为参照</td>
+</tr>
+<tr>
+<td align="center"><code>canvas.scale(x, y)</code></td>
+<td align="center">将当前画布在水平方向上缩放x倍，竖直方向上缩放y倍</td>
+</tr>
+<tr>
+<td align="center"><code>canvas.rotate(angle)</code></td>
+<td align="center">将当前画布顺时针旋转angle度</td>
+</tr>
+</tbody></table>
 <h3 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout()"></a>onLayout()</h3><p>　　<code>onLayout()</code>方法负责布局，大多数情况是在自定义<code>ViewGroup</code>中才会重写，主要用来确定子<code>View</code>在这个布局空间中的摆放位置。</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onLayout</span><span class="params">(changed: <span class="type">Boolean</span>, l: <span class="type">Int</span>, t: <span class="type">Int</span>, r: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onLayout(changed, l, t, r, b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>　　该方法有5个参数，其中<code>changed</code>表示这个控件是否有了新的尺寸或位置；l、t、r、b分别表示这个<code>View</code>相对于父布局的左&#x2F;上&#x2F;右&#x2F;下方的位置。</p>
 <p>　　<strong>以下是onLayout()方法中常用的方法：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getChildCount()：获取子View的数量；</span><br><span class="line">getChildAt(i)：获取第i个子View；</span><br><span class="line">getWidth/Height()：获取onMeasure()中返回的宽度和高度的测量值；</span><br><span class="line">child.getLayoutParams()：获取到子View的LayoutParams对象；</span><br><span class="line">child.getMeasuredWidth/Height()：获取onMeasure()方法中测量的子View的宽度和高度值；</span><br><span class="line">getPaddingLeft/Right/Top/Bottom()：获取控件的四周内边距；</span><br><span class="line">child.layout(l, t, r, b)：设置子View布局的上下左右边的坐标。</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><h4 id="generateLayoutParams"><a href="#generateLayoutParams" class="headerlink" title="generateLayoutParams()"></a>generateLayoutParams()</h4><p>　　<code>generateLayoutParams()</code>方法用在自定义<code>ViewGroup</code>中，用来指明子控件之间的关系，即与当前的<code>ViewGroup</code>对应的<code>LayoutParams</code>。我们只需要在方法中返回一个我们想要使用的<code>LayoutParams</code>类型的对象即可。</p>
-<p>　　在<code>generateLayoutParams()</code>方法中需要传入一个<code>AttributeSet</code>对象作为参数，这个对象是这个<code>ViewGroup</code>的属性集，系统根据这个<code>ViewGroup</code>的属性集来定义子View的布局规则，供子View使用。</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>getChildCount()</code></td>
+<td align="center">获取子View的数量</td>
+</tr>
+<tr>
+<td align="center"><code>getChildAt(i)</code></td>
+<td align="center">获取第i个子View</td>
+</tr>
+<tr>
+<td align="center"><code>getWidth/Height()</code></td>
+<td align="center">获取<code>onMeasure()</code>中返回的宽度和高度的测量值</td>
+</tr>
+<tr>
+<td align="center"><code>child.getLayoutParams()</code></td>
+<td align="center">获取到子View的LayoutParams对象</td>
+</tr>
+<tr>
+<td align="center"><code>child.getMeasuredWidth/Height()</code></td>
+<td align="center">获取<code>onMeasure()</code>方法中测量的子View的宽度和高度值</td>
+</tr>
+<tr>
+<td align="center"><code>getPaddingLeft/Right/Top/Bottom()</code></td>
+<td align="center">获取控件的四周内边距</td>
+</tr>
+<tr>
+<td align="center"><code>child.layout(l, t, r, b)</code></td>
+<td align="center">设置子View布局的上下左右边的坐标</td>
+</tr>
+</tbody></table>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><h4 id="generateLayoutParams"><a href="#generateLayoutParams" class="headerlink" title="generateLayoutParams()"></a>generateLayoutParams()</h4><p>　　<code>generateLayoutParams()</code>方法用在自定义<code>ViewGroup</code>中，用来指明子控件之间的关系，即与当前的ViewGroup对应的LayoutParams。我们只需要在方法中返回一个我们想要使用的LayoutParams类型的对象即可。</p>
+<p>　　在<code>generateLayoutParams()</code>方法中需要传入一个<code>AttributeSet</code>对象作为参数，这个对象是这个ViewGroup的属性集，系统根据这个ViewGroup的属性集来定义子View的布局规则，供子View使用。</p>
 <p>　　例如，在自定义流式布局中，我们只需要关心子控件之间的间隔关系，因此我们需要在<code>generateLayoutParams()</code>方法中返回一个<code>new MarginLayoutParams()</code>即可。</p>
 <h4 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent()"></a>onTouchEvent()</h4><p>　　<code>onTouchEvent()</code>方法用来监测用户手指操作。我们通过方法中<code>MotionEvent</code>参数对象的<code>getAction()</code>方法来实时获取用户的手势，有<code>UP</code>、<code>DOWN</code>和<code>MOVE</code>三个枚举值，分别表示用于手指抬起、按下和滑动的动作。每当用户有操作时，就会回调<code>onTouchEvent()</code>方法。</p>
-<h4 id="onScrollChanged"><a href="#onScrollChanged" class="headerlink" title="onScrollChanged()"></a>onScrollChanged()</h4><p>　　如果我们的自定义<code>View / ViewGroup</code>是继承自<code>ScrollView/ HorizontalScrollView</code>等可以滚动的控件，就可以通过重写<code>onScrollChanged()</code>方法来监听控件的滚动事件。</p>
+<h4 id="onScrollChanged"><a href="#onScrollChanged" class="headerlink" title="onScrollChanged()"></a>onScrollChanged()</h4><p>　　如果我们的自定义View &#x2F; ViewGroup是继承自<code>ScrollView/ HorizontalScrollView</code>等可以滚动的控件，就可以通过重写<code>onScrollChanged()</code>方法来监听控件的滚动事件。</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onScrollChanged</span><span class="params">(l: <span class="type">Int</span>, t: <span class="type">Int</span>, oldl: <span class="type">Int</span>, oldt: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onScrollChanged(l, t, oldl, oldt)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>　　这个方法中有四个参数：<code>l</code>和<code>t</code>分别表示当前滑动到的点在水平和竖直方向上的坐标；<code>oldl</code>和<code>oldt</code>分别表示上次滑动到的点在水平和竖直方向上的坐标。我们可以通过这四个值对滑动进行处理，如添加属性动画等。</p>
-<h4 id="invalidate"><a href="#invalidate" class="headerlink" title="invalidate()"></a>invalidate()</h4><p>　　<code>invalidate()</code>方法的作用是请求View树进行重绘，即draw()方法，如果视图的大小发生了变化，还会调用layout()方法。</p>
+<h4 id="invalidate"><a href="#invalidate" class="headerlink" title="invalidate()"></a>invalidate()</h4><p>　　<code>invalidate()</code>方法的作用是请求View树进行重绘，即<code>draw()</code>方法，如果视图的大小发生了变化，还会调用<code>layout()</code>方法。</p>
 <p>　　<strong>一般会引起invalidate()操作的函数如下：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">直接调用invalidate()方法，请求重新draw()，但只会绘制调用者本身；</span><br><span class="line">调用setSelection()方法，请求重新draw()，但只会绘制调用者本身；</span><br><span class="line">调用setVisibility()方法，会间接调用invalidate()方法，继而绘制该View；</span><br><span class="line">调用setEnabled()方法，请求重新draw()，但不会重新绘制任何视图，包括调用者本身。</span><br></pre></td></tr></table></figure>
 
 <h4 id="postInvalidate"><a href="#postInvalidate" class="headerlink" title="postInvalidate()"></a>postInvalidate()</h4><p>　　功能与<code>invalidate()</code>方法相同，只是<code>postInvalidate()</code>方法是异步请求重绘视图。</p>
 <h4 id="requestLayout"><a href="#requestLayout" class="headerlink" title="requestLayout()"></a>requestLayout()</h4><p>　　<code>requestLayout()</code>方法只是对View树进行重新布局layout过程（包括<code>measure()</code>过程和<code>layout()</code>过程），不会调用<code>draw()</code>过程，即不会重新绘制任何视图，包括该调用者本身。</p>
 <h4 id="requestFocus"><a href="#requestFocus" class="headerlink" title="requestFocus()"></a>requestFocus()</h4><p>　　请求View树的<code>draw()</code>过程，但只会绘制需要重绘的视图，即哪个View或ViewGroup调用了这个方法，就重绘哪个视图。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>　　最后，让我们来总览一下自定义View &#x2F; ViewGroup时调用的各种函数的顺序，如下图所示：</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>　　让我们来总览一下自定义View &#x2F; ViewGroup时调用的各种函数的顺序，如下图所示：</p>
 <p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2023/12/23/fyiQN1og7ZGrKT8.png" alt="img"></p>
 <p>　<strong>在这些方法中：</strong></p>
 <ul>
@@ -388,7 +705,12 @@
 <li><code>onLayout()</code>会在<code>onMeasure()</code>方法之后被调用一次，将控件或其子控件进行布局；</li>
 <li><code>onDraw()</code>会在<code>onLayout()</code>方法之后调用一次，也会在用户手指触摸屏幕时被调用多次，来绘制控件。</li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top">LazyIonEs</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/">https://blog.lazyiones.top/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.lazyiones.top" target="_blank">LazyIonEs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><a class="post-meta__tags" href="/tags/%E5%A4%A9%E6%B0%94/">天气</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/img_cover_31.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_73.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解Android中的自定义属性</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_75.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Android CameraX CameraController</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/08/06/%E4%BB%BF%E5%A2%A8%E8%BF%B924%E5%B0%8F%E6%97%B6%E5%A4%A9%E6%B0%94%E8%87%AA%E5%AE%9A%E4%B9%89View/" title="仿墨迹24小时天气自定义View"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_74.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-06</div><div class="title">仿墨迹24小时天气自定义View</div></div></a></div><div><a href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_73.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-10</div><div class="title">深入理解Android中的自定义属性</div></div></a></div><div><a href="/2023/05/05/%E3%80%90%E8%87%AA%E5%AE%9A%E4%B9%89-View%E3%80%91%E7%9B%B8%E6%9C%BA%E9%A2%84%E8%A7%88%E7%82%B9%E5%87%BB%E8%81%9A%E7%84%A6%E6%A1%86-%E5%B8%A6%E5%AF%B9%E7%84%A6%E5%8A%A8%E7%94%BB%EF%BC%8C%E6%9B%9D%E5%85%89%E8%B0%83%E6%95%B4/" title="【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_28.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-05</div><div class="title">【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)</div></div></a></div><div><a href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_75.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-30</div><div class="title">Android CameraX CameraController</div></div></a></div><div><a href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_44.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-15</div><div class="title">Android CameraX中使用Camera2</div></div></a></div><div><a href="/2023/08/14/Android-CameraX%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Android CameraX的基本使用"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_25.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-14</div><div class="title">Android CameraX的基本使用</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/img/loading.gif" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LazyIonEs</div><div class="author-info__description">学习Android两年半的Android开发实习生</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lazyiones" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lazyiones@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">如果阅读过程中遇到了问题，请及时评论或者留言，看到了会在第一时间给出回复。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">View的绘制流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViewRoot"><span class="toc-number">2.</span> <span class="toc-text">ViewRoot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%BB%98%E5%88%B6%E7%9A%84%E8%B5%B7%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">View绘制的起点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">4.</span> <span class="toc-text">三个阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#measure%E9%98%B6%E6%AE%B5"><span class="toc-number">4.1.</span> <span class="toc-text">measure阶段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#layout%E9%98%B6%E6%AE%B5"><span class="toc-number">5.</span> <span class="toc-text">layout阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#View-layout"><span class="toc-number">5.1.</span> <span class="toc-text">View.layout()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#draw%E9%98%B6%E6%AE%B5"><span class="toc-number">6.</span> <span class="toc-text">draw阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android%E8%87%AA%E5%AE%9A%E4%B9%89View-ViewGroup%E7%9A%84%E6%AD%A5%E9%AA%A4%E5%A4%A7%E8%87%B4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">Android自定义View &#x2F; ViewGroup的步骤大致如下：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">7.1.</span> <span class="toc-text">自定义属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">7.1.1.</span> <span class="toc-text">定义自定义属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">7.2.</span> <span class="toc-text">使用自定义属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">7.3.</span> <span class="toc-text">获取自定义属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">7.4.</span> <span class="toc-text">构造方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">7.4.1.</span> <span class="toc-text">一个参数的构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">7.4.2.</span> <span class="toc-text">两个参数的构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">7.4.3.</span> <span class="toc-text">三个参数的构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%B4%E5%90%88"><span class="toc-number">7.4.4.</span> <span class="toc-text">三个构造方法的整合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onMeasure"><span class="toc-number">7.5.</span> <span class="toc-text">onMeasure()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onDraw"><span class="toc-number">7.6.</span> <span class="toc-text">onDraw()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Paint%E7%B1%BB"><span class="toc-number">7.7.</span> <span class="toc-text">Paint类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas%E7%B1%BB"><span class="toc-number">7.7.1.</span> <span class="toc-text">Canvas类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onLayout"><span class="toc-number">7.8.</span> <span class="toc-text">onLayout()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95"><span class="toc-number">7.9.</span> <span class="toc-text">其他方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#generateLayoutParams"><span class="toc-number">7.9.1.</span> <span class="toc-text">generateLayoutParams()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onTouchEvent"><span class="toc-number">7.9.2.</span> <span class="toc-text">onTouchEvent()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onScrollChanged"><span class="toc-number">7.9.3.</span> <span class="toc-text">onScrollChanged()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#invalidate"><span class="toc-number">7.9.4.</span> <span class="toc-text">invalidate()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#postInvalidate"><span class="toc-number">7.9.5.</span> <span class="toc-text">postInvalidate()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#requestLayout"><span class="toc-number">7.9.6.</span> <span class="toc-text">requestLayout()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#requestFocus"><span class="toc-number">7.9.7.</span> <span class="toc-text">requestFocus()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.10.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_73.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解Android中的自定义属性"/></a><div class="content"><a class="title" href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性">深入理解Android中的自定义属性</a><time datetime="2024-01-10T11:52:04.000Z" title="发表于 2024-01-10 19:52:04">2024-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/" title="自定义View的流程"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_31.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自定义View的流程"/></a><div class="content"><a class="title" href="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/" title="自定义View的流程">自定义View的流程</a><time datetime="2023-12-23T08:14:46.000Z" title="发表于 2023-12-23 16:14:46">2023-12-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_75.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX CameraController"/></a><div class="content"><a class="title" href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController">Android CameraX CameraController</a><time datetime="2023-08-30T11:14:58.000Z" title="发表于 2023-08-30 19:14:58">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_87.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HomeBrew 常用指令"/></a><div class="content"><a class="title" href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令">HomeBrew 常用指令</a><time datetime="2023-08-30T10:50:42.000Z" title="发表于 2023-08-30 18:50:42">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_44.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX中使用Camera2"/></a><div class="content"><a class="title" href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2">Android CameraX中使用Camera2</a><time datetime="2023-08-15T01:39:50.000Z" title="发表于 2023-08-15 09:39:50">2023-08-15</time></div></div></div></div></div></div></main><footer id="footer" style="background: url(/img/footer_bg.png)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By LazyIonEs</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+<h2 id="View的生命周期"><a href="#View的生命周期" class="headerlink" title="View的生命周期"></a>View的生命周期</h2><p>​	流程图:</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://s2.loli.net/2024/01/12/QY4CBawXMo96huS.png" alt="image.png"></p>
+<p>​	tips:</p>
+<p>​	<code>onCreate#setContentView() start</code> 与 <code>onCreate#setContentView() end </code>指的是这样</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    Log.e(TAG, <span class="string">&quot;activity onCreate start&quot;</span>)</span><br><span class="line">    setContentView(R.layout.activity_main)</span><br><span class="line">    Log.e(TAG, <span class="string">&quot;activity onCreate end&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top">LazyIonEs</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/">https://blog.lazyiones.top/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.lazyiones.top" target="_blank">LazyIonEs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><a class="post-meta__tags" href="/tags/%E5%A4%A9%E6%B0%94/">天气</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/img_cover_87.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_37.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解Android中的自定义属性</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_58.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Android CameraX CameraController</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/08/06/%E4%BB%BF%E5%A2%A8%E8%BF%B924%E5%B0%8F%E6%97%B6%E5%A4%A9%E6%B0%94%E8%87%AA%E5%AE%9A%E4%B9%89View/" title="仿墨迹24小时天气自定义View"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_11.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-06</div><div class="title">仿墨迹24小时天气自定义View</div></div></a></div><div><a href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_37.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-10</div><div class="title">深入理解Android中的自定义属性</div></div></a></div><div><a href="/2023/05/05/%E3%80%90%E8%87%AA%E5%AE%9A%E4%B9%89-View%E3%80%91%E7%9B%B8%E6%9C%BA%E9%A2%84%E8%A7%88%E7%82%B9%E5%87%BB%E8%81%9A%E7%84%A6%E6%A1%86-%E5%B8%A6%E5%AF%B9%E7%84%A6%E5%8A%A8%E7%94%BB%EF%BC%8C%E6%9B%9D%E5%85%89%E8%B0%83%E6%95%B4/" title="【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_68.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-05</div><div class="title">【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)</div></div></a></div><div><a href="/2023/08/14/Android-CameraX%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Android CameraX的基本使用"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_82.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-14</div><div class="title">Android CameraX的基本使用</div></div></a></div><div><a href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_28.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-15</div><div class="title">Android CameraX中使用Camera2</div></div></a></div><div><a href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img class="cover" src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_58.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-30</div><div class="title">Android CameraX CameraController</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/img/loading.gif" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LazyIonEs</div><div class="author-info__description">学习Android两年半的Android开发实习生</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lazyiones" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lazyiones@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">如果阅读过程中遇到了问题，请及时评论或者留言，看到了会在第一时间给出回复。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">View的绘制流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViewRoot"><span class="toc-number">2.</span> <span class="toc-text">ViewRoot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%BB%98%E5%88%B6%E7%9A%84%E8%B5%B7%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">View绘制的起点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">4.</span> <span class="toc-text">三个阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#measure%E9%98%B6%E6%AE%B5"><span class="toc-number">4.1.</span> <span class="toc-text">measure阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#layout%E9%98%B6%E6%AE%B5"><span class="toc-number">4.2.</span> <span class="toc-text">layout阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#View-layout"><span class="toc-number">4.2.1.</span> <span class="toc-text">View.layout()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#draw%E9%98%B6%E6%AE%B5"><span class="toc-number">4.3.</span> <span class="toc-text">draw阶段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android%E8%87%AA%E5%AE%9A%E4%B9%89View-ViewGroup%E7%9A%84%E6%AD%A5%E9%AA%A4%E5%A4%A7%E8%87%B4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">Android自定义View &#x2F; ViewGroup的步骤大致如下：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text">自定义属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">5.1.1.</span> <span class="toc-text">定义自定义属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">5.2.</span> <span class="toc-text">使用自定义属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="toc-number">5.3.</span> <span class="toc-text">获取自定义属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">构造方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">5.4.1.</span> <span class="toc-text">一个参数的构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">5.4.2.</span> <span class="toc-text">两个参数的构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">5.4.3.</span> <span class="toc-text">三个参数的构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%B4%E5%90%88"><span class="toc-number">5.4.4.</span> <span class="toc-text">三个构造方法的整合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onMeasure"><span class="toc-number">5.5.</span> <span class="toc-text">onMeasure()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onDraw"><span class="toc-number">5.6.</span> <span class="toc-text">onDraw()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Paint%E7%B1%BB"><span class="toc-number">5.7.</span> <span class="toc-text">Paint类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas%E7%B1%BB"><span class="toc-number">5.7.1.</span> <span class="toc-text">Canvas类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onLayout"><span class="toc-number">5.8.</span> <span class="toc-text">onLayout()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95"><span class="toc-number">5.9.</span> <span class="toc-text">其他方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#generateLayoutParams"><span class="toc-number">5.9.1.</span> <span class="toc-text">generateLayoutParams()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onTouchEvent"><span class="toc-number">5.9.2.</span> <span class="toc-text">onTouchEvent()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onScrollChanged"><span class="toc-number">5.9.3.</span> <span class="toc-text">onScrollChanged()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#invalidate"><span class="toc-number">5.9.4.</span> <span class="toc-text">invalidate()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#postInvalidate"><span class="toc-number">5.9.5.</span> <span class="toc-text">postInvalidate()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#requestLayout"><span class="toc-number">5.9.6.</span> <span class="toc-text">requestLayout()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#requestFocus"><span class="toc-number">5.9.7.</span> <span class="toc-text">requestFocus()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.10.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">6.</span> <span class="toc-text">View的生命周期</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_37.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解Android中的自定义属性"/></a><div class="content"><a class="title" href="/2024/01/10/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="深入理解Android中的自定义属性">深入理解Android中的自定义属性</a><time datetime="2024-01-10T11:52:04.000Z" title="发表于 2024-01-10 19:52:04">2024-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/" title="自定义View的流程"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_87.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自定义View的流程"/></a><div class="content"><a class="title" href="/2023/12/23/%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%9A%84%E6%B5%81%E7%A8%8B/" title="自定义View的流程">自定义View的流程</a><time datetime="2023-12-23T08:14:46.000Z" title="发表于 2023-12-23 16:14:46">2023-12-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_58.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX CameraController"/></a><div class="content"><a class="title" href="/2023/08/30/Android-CameraX-CameraController/" title="Android CameraX CameraController">Android CameraX CameraController</a><time datetime="2023-08-30T11:14:58.000Z" title="发表于 2023-08-30 19:14:58">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_68.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HomeBrew 常用指令"/></a><div class="content"><a class="title" href="/2023/08/30/Homebrew-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" title="HomeBrew 常用指令">HomeBrew 常用指令</a><time datetime="2023-08-30T10:50:42.000Z" title="发表于 2023-08-30 18:50:42">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2"><img src= "/img/loading.gif" data-lazy-src="/img/cover/img_cover_28.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX中使用Camera2"/></a><div class="content"><a class="title" href="/2023/08/15/Android-CameraX%E4%B8%AD%E4%BD%BF%E7%94%A8Camera2/" title="Android CameraX中使用Camera2">Android CameraX中使用Camera2</a><time datetime="2023-08-15T01:39:50.000Z" title="发表于 2023-08-15 09:39:50">2023-08-15</time></div></div></div></div></div></div></main><footer id="footer" style="background: url(/img/footer_bg.png)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By LazyIonEs</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
   const initWaline = () => {
     const waline = Waline.init(Object.assign({
       el: '#waline-wrap',
