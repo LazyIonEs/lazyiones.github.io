@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>深入理解Android中的自定义属性 | LazyIonEs</title><meta name="author" content="LazyIonEs"><meta name="copyright" content="LazyIonEs"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文出处：http:&#x2F;&#x2F;blog.csdn.net&#x2F;lmj623565791&#x2F;article&#x2F;details&#x2F;45022631本文出自:【张鸿洋的博客】  引言对于自定义属性，大家肯定都不陌生，遵循以下几步，就可以实现：  自定义一个CustomView(extends View)类 编写values&#x2F;attrs.xml，在其中编写styleable和item等标签元素 在布局文件中Custom">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解Android中的自定义属性">
+<meta property="og:url" content="https://blog.lazyiones.top/post/2897c959/index.html">
+<meta property="og:site_name" content="LazyIonEs">
+<meta property="og:description" content="本文出处：http:&#x2F;&#x2F;blog.csdn.net&#x2F;lmj623565791&#x2F;article&#x2F;details&#x2F;45022631本文出自:【张鸿洋的博客】  引言对于自定义属性，大家肯定都不陌生，遵循以下几步，就可以实现：  自定义一个CustomView(extends View)类 编写values&#x2F;attrs.xml，在其中编写styleable和item等标签元素 在布局文件中Custom">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lazyiones.top/img/cover/img_cover_67.png">
+<meta property="article:published_time" content="2024-01-10T11:52:04.000Z">
+<meta property="article:modified_time" content="2024-04-11T02:05:23.890Z">
+<meta property="article:author" content="LazyIonEs">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="自定义View">
+<meta property="article:tag" content="天气">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lazyiones.top/img/cover/img_cover_67.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://blog.lazyiones.top/post/2897c959/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="7ETsimotwNLa0xM11NCX6CztlOChMBp8fpMyRCD6gXQ"/><meta name="msvalidate.01" content="9D1AA5FD4F3C79F6A6C540B0A0630D85"/><meta name="baidu-site-verification" content="codeva-THzCML9R7U"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解Android中的自定义属性',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/top_banner_2.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">LazyIonEs</span></a><a class="nav-page-title" href="/"><span class="site-name">深入理解Android中的自定义属性</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">深入理解Android中的自定义属性</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-10T11:52:04.000Z" title="发表于 2024-01-10 19:52:04">2024-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-11T02:05:23.890Z" title="更新于 2024-04-11 10:05:23">2024-04-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+<p>本文出处：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/lmj623565791/article/details/45022631">http://blog.csdn.net/lmj623565791/article/details/45022631</a><br>本文出自:<a target="_blank" rel="noopener" href="http://blog.csdn.net/lmj623565791/">【张鸿洋的博客】</a></p>
+</blockquote>
+<h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>对于自定义属性，大家肯定都不陌生，遵循以下几步，就可以实现：</p>
+<ol>
+<li>自定义一个<code>CustomView(extends View)</code>类</li>
+<li>编写<code>values/attrs.xml</code>，在其中编写<code>styleable</code>和<code>item</code>等标签元素</li>
+<li>在布局文件中<code>CustomView</code>使用自定义的属性（注意<code>namespace</code>）</li>
+<li>在<code>CustomView</code>的构造方法中通过<code>TypedArray</code>获取</li>
+</ol>
+<blockquote>
+<p>ps:如果你对上述几个步骤不熟悉，建议先熟悉下，再继续~</p>
+</blockquote>
+<p>那么，我有几个问题：</p>
+<ul>
+<li>以上步骤是如何奏效的？</li>
+<li><code>styleable</code> 的含义是什么？可以不写嘛？我自定义属性，我声明属性就好了，为什么一定要写个<code>styleable</code>呢？</li>
+<li>如果系统中已经有了语义比较明确的属性，我可以直接使用嘛？</li>
+<li>构造方法中的有个参数叫做<code>AttributeSet</code><br>（eg: MyTextView(Context context, AttributeSet attrs) ）这个参数看名字就知道包含的是参数的数组，那么我能不能通过它去获取我的自定义属性呢？</li>
+<li><code>TypedArray</code>是什么鬼？从哪冒出来的，就要我去使用？</li>
+</ul>
+<p>恩，针对这几个问题，大家可以考虑下，如何回答呢？还是说：老子会背上述4个步骤就够了~~</p>
+<h4 id="常见的例子"><a href="#常见的例子" class="headerlink" title="常见的例子"></a>常见的例子</h4><p>接下来通过例子来回答上述问题，问题的回答顺序不定~~大家先看一个常见的例子，即上述几个步骤的代码化。</p>
+<ul>
+<li>自定义属性的声明文件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;text&quot;</span> <span class="attr">format</span>=<span class="string">&quot;string&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;testAttr&quot;</span> <span class="attr">format</span>=<span class="string">&quot;integer&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自定义View类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.res.TypedArray;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTextView</span> <span class="keyword">extends</span> <span class="title class_">View</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">TAG</span> <span class="operator">=</span> MyTextView.class.getSimpleName();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyTextView</span><span class="params">(Context context, AttributeSet attrs)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context, attrs);</span><br><span class="line"></span><br><span class="line">        <span class="type">TypedArray</span> <span class="variable">ta</span> <span class="operator">=</span> context.obtainStyledAttributes(attrs, R.styleable.test);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">text</span> <span class="operator">=</span> ta.getString(R.styleable.test_testAttr);</span><br><span class="line">        <span class="type">int</span> <span class="variable">textAttr</span> <span class="operator">=</span> ta.getInteger(R.styleable.test_text, -<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        Log.e(TAG, <span class="string">&quot;text = &quot;</span> + text + <span class="string">&quot; , textAttr = &quot;</span> + textAttr);</span><br><span class="line"></span><br><span class="line">        ta.recycle();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>布局文件中使用</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:zhy</span>=<span class="string">&quot;http://schemas.android.com/apk/res/com.example.test&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">com.example.test.MyTextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;100dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">zhy:testAttr</span>=<span class="string">&quot;520&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">zhy:text</span>=<span class="string">&quot;helloworld&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>ok，大家花3s扫一下，运行结果为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyTextView: text = helloworld , textAttr = <span class="number">5201</span></span><br></pre></td></tr></table></figure>
+
+<p>应该都不意外吧，注意下，我的<code>styleable</code>的<code>name</code>写的是<code>test</code>，所以说这里并不要求一定是自定义<code>View</code>的名字。</p>
+<h4 id="AttributeSet与TypedArray"><a href="#AttributeSet与TypedArray" class="headerlink" title="AttributeSet与TypedArray"></a><code>AttributeSet</code>与<code>TypedArray</code></h4><p>下面考虑：</p>
+<blockquote>
+<p>构造方法中的有个参数叫做<code>AttributeSet</code>（eg: MyTextView(Context context, AttributeSet attrs) ）这个参数看名字就知道包含的是参数的集合，那么我能不能通过它去获取我的自定义属性呢？</p>
+</blockquote>
+<p>首先<code>AttributeSet</code>中的确保存的是该View声明的所有的属性，并且外面的确可以通过它去获取（自定义的）属性，怎么做呢？<br>其实看下<code>AttributeSet</code>的方法就明白了，下面看代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">MyTextView</span><span class="params">(Context context, AttributeSet attrs)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context, attrs);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> attrs.getAttributeCount();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">attrName</span> <span class="operator">=</span> attrs.getAttributeName(i);</span><br><span class="line">            <span class="type">String</span> <span class="variable">attrVal</span> <span class="operator">=</span> attrs.getAttributeValue(i);</span><br><span class="line">            Log.e(TAG, <span class="string">&quot;attrName = &quot;</span> + attrName + <span class="string">&quot; , attrVal = &quot;</span> + attrVal);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ==&gt;use typedarray ...</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MyTextView(<span class="number">4136</span>): attrName = layout_width , attrVal = <span class="number">100.</span>0dip</span><br><span class="line"><span class="title function_">MyTextView</span><span class="params">(<span class="number">4136</span>)</span>: attrName = layout_height , attrVal = <span class="number">200.</span>0dip</span><br><span class="line"><span class="title function_">MyTextView</span><span class="params">(<span class="number">4136</span>)</span>: attrName = text , attrVal = helloworld</span><br><span class="line"><span class="title function_">MyTextView</span><span class="params">(<span class="number">4136</span>)</span>: attrName = testAttr , attrVal = <span class="number">520</span></span><br></pre></td></tr></table></figure>
+
+<p>结合上面的布局文件，你发现了什么？<br>我擦，果然很神奇，真的获得所有的属性，恩，没错，通过<code>AttributeSet</code>可以获得布局文件中定义的所有属性的key和value（还有一些方法，自己去尝试），那么是不是说<code>TypedArray</code>这个鬼可以抛弃了呢？答案是：<code>NO!</code>。</p>
+<p>现在关注下一个问题：</p>
+<blockquote>
+<p><code>TypedArray</code>是什么鬼？从哪冒出来的，就要我去使用？</p>
+</blockquote>
+<p>我们简单修改下，布局文件中的<code>MyTextView</code>的属性。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.example.test.MyTextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/dp100&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/dp200&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">zhy:testAttr</span>=<span class="string">&quot;520&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">zhy:text</span>=<span class="string">&quot;@string/hello_world&quot;</span> /&gt;</span>12345</span><br></pre></td></tr></table></figure>
+
+<p>现在再次运行的结果是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyTextView(<span class="number">4692</span>): attrName = layout_width , attrVal = @<span class="number">2131165234</span></span><br><span class="line">MyTextView(<span class="number">4692</span>): attrName = layout_height , attrVal = @<span class="number">2131165235</span></span><br><span class="line">MyTextView(<span class="number">4692</span>): attrName = text , attrVal = @<span class="number">2131361809</span></span><br><span class="line">MyTextView(<span class="number">4692</span>): attrName = testAttr , attrVal = <span class="number">520</span></span><br><span class="line">&gt;&gt;use typedarray</span><br><span class="line"><span class="title function_">MyTextView</span><span class="params">(<span class="number">4692</span>)</span>: text = Hello world! , textAttr = <span class="number">520123456</span></span><br></pre></td></tr></table></figure>
+
+<p>发现了什么？通过<code>AttributeSet</code>获取的值，如果是引用都变成了@+数字的字符串。你说，这玩意你能看懂么？那么你看看最后一行使用TypedArray获取的值，是不是瞬间明白了什么。</p>
+<p><code>TypedArray</code>其实是用来简化我们的工作的，比如上例，如果布局中的属性的值是引用类型（比如：<code>@dimen/dp100</code>），如果使用<code>AttributeSet</code>去获得最终的像素值，那么需要第一步拿到id，第二步再去解析id。而<code>TypedArray</code>正是帮我们简化了这个过程。</p>
+<p>贴一下：如果通过<code>AttributeSet</code>获取最终的像素值的过程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">widthDimensionId</span> <span class="operator">=</span>  attrs.getAttributeResourceValue(<span class="number">0</span>, -<span class="number">1</span>);</span><br><span class="line">Log.e(TAG, <span class="string">&quot;layout_width= &quot;</span>+getResources().getDimension(widthDimensionId));</span><br></pre></td></tr></table></figure>
+
+<p>ok，现在别人问你<code>TypedArray</code>存在的意义，你就可以告诉他了。</p>
+<h4 id="declare-styleable"><a href="#declare-styleable" class="headerlink" title="declare-styleable"></a><code>declare-styleable</code></h4><p>我们已经解决了两个问题，接下来，我们看看布局文件，我们有一个属性叫做：<code>zhy:text</code>。<br>总所周知，系统提供了一个属性叫做：<code>android:text</code>，那么我觉得直接使用<code>android:text</code>更nice，这样的话，考虑问题：</p>
+<blockquote>
+<p>如果系统中已经有了语义比较明确的属性，我可以直接使用嘛？</p>
+</blockquote>
+<p>答案是可以的，怎么做呢？<br>直接在attrs.xml中使用<code>android:text</code>属性。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;android:text&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;testAttr&quot;</span> <span class="attr">format</span>=<span class="string">&quot;integer&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span>1234</span><br></pre></td></tr></table></figure>
+
+<p>注意，这里我们是使用已经定义好的属性，不需要去添加<code>format</code>属性（注意声明和使用的区别，差别就是有没有format）。<br>然后在类中这么获取：<code>ta.getString(R.styleable.test_android_text)</code>;布局文件中直接<code>android:text=&quot;@string/hello_world&quot;</code>即可。</p>
+<p>这里提一下，系统中定义的属性，其实和我们自定义属性的方式类似，你可以在<code>sdk/platforms/android-xx/data/res/values</code>该目录下看到系统中定义的属性。然后你可以在系统提供的<code>View</code>（eg:<code>TextView</code>）的构造方法中发现<code>TypedArray</code>获取属性的代码（自己去看一下）。</p>
+<p>ok，接下来，我在想，既然<code>declare-styleable</code>这个标签的name都能随便写，这么随意的话，那么考虑问题：</p>
+<blockquote>
+<p>styleable 的含义是什么？可以不写嘛？我自定义属性，我声明属性就好了，为什么一定要写个styleable呢？</p>
+</blockquote>
+<p>其实的确是可以不写的，怎么做呢？</p>
+<ul>
+<li>首先删除<code>declare-styleable</code>的标签</li>
+</ul>
+<p>那么现在的attrs.xml为：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;testAttr&quot;</span> <span class="attr">format</span>=<span class="string">&quot;integer&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span>1234</span><br></pre></td></tr></table></figure>
+
+<p>哟西，so清爽~</p>
+<p>* MyTextView实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.res.TypedArray;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTextView</span> <span class="keyword">extends</span> <span class="title class_">View</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">TAG</span> <span class="operator">=</span> MyTextView.class.getSimpleName();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span>[] mAttr = &#123; android.R.attr.text, R.attr.testAttr &#125;;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ATTR_ANDROID_TEXT</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ATTR_TESTATTR</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyTextView</span><span class="params">(Context context, AttributeSet attrs)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context, attrs);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ==&gt;use typedarray</span></span><br><span class="line">        <span class="type">TypedArray</span> <span class="variable">ta</span> <span class="operator">=</span> context.obtainStyledAttributes(attrs, mAttr);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">text</span> <span class="operator">=</span> ta.getString(ATTR_ANDROID_TEXT);</span><br><span class="line">        <span class="type">int</span> <span class="variable">textAttr</span> <span class="operator">=</span> ta.getInteger(ATTR_TESTATTR, -<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//输出 text = Hello world! , textAttr = 520</span></span><br><span class="line">        Log.e(TAG, <span class="string">&quot;text = &quot;</span> + text + <span class="string">&quot; , textAttr = &quot;</span> + textAttr);</span><br><span class="line"></span><br><span class="line">        ta.recycle();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>貌似多了些代码，可以看到我们声明了一个int数组，数组中的元素就是我们想要获取的attr的id。并且我们根据元素的在数组中的位置，定义了一些整形的常量代表其下标，然后通过<code>TypedArray</code>进行获取。<br>可以看到，我们原本的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R.styleable.test =&gt; mAttr</span><br><span class="line">R.styleable.test_text =&gt; ATTR_ANDROID_TEXT(0)</span><br><span class="line">R.styleable.test_testAttr =&gt; ATTR_TESTATTR(1)</span><br></pre></td></tr></table></figure>
+
+<p>那么其实呢？android在其内部也会这么做，按照传统的写法，它会在R.java生成如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">attr</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> testAttr=<span class="number">0x7f0100a9</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">styleable</span> &#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">test_android_text</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">test_testAttr</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span>[] test = &#123;</span><br><span class="line">            <span class="number">0x0101014f</span>, <span class="number">0x7f0100a9</span></span><br><span class="line">     &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ok，根据上述你应该发现了什么。styleale的出现系统可以为我们完成很多常量（int[]数组，下标常量）等的编写，简化我们的开发工作（想想如果一堆属性，自己编写常量，你得写成什么样的代码）。那么大家肯定还知道<code>declare-styleable</code>的name属性，一般情况下写的都是我们自定义View的类名。主要为了直观的表达，该<code>declare-styleable</code>的属性，都是改View所用的。</p>
+<p>其实了解该原理是有用的</p>
+<p>ok，现在5个问题，回答了4个，第一个问题：</p>
+<blockquote>
+<p>自定义属性的几个步骤是如何奏效的？</p>
+</blockquote>
+<p>恩，上述以及基本涵盖了这个问题的答案，大家自己总结，所以：略。</p>
+<p>总结下今天的博客。</p>
+<ul>
+<li><code>attrs.xml</code>里面的<code>declare-styleable</code>以及item，android会根据其在R.java中生成一些常量方便我们使用(aapt干的)，本质上，我们可以不声明<code>declare-styleable</code>仅仅声明所需的属性即可。</li>
+<li>我们在View的构造方法中，可以通过<code>AttributeSet</code>去获得自定义属性的值，但是比较麻烦，而<code>TypedArray</code>可以很方便的便于我们去获取。</li>
+<li>我们在自定义View的时候，可以使用系统已经定义的属性。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top">LazyIonEs</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.lazyiones.top/post/2897c959/">https://blog.lazyiones.top/post/2897c959/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.lazyiones.top" target="_blank">LazyIonEs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><a class="post-meta__tags" href="/tags/%E5%A4%A9%E6%B0%94/">天气</a></div><div class="post-share"><div class="social-share" data-image="/img/cover/img_cover_67.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/a70c5b2/" title="ApkVerifier的使用"><img class="cover" src="/img/cover/img_cover_73.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">ApkVerifier的使用</div></div><div class="info-2"><div class="info-item-1">本文介绍如何使用ApkVerifier获取APK的签名信息。引入1implementation(&quot;com.android.tools.build:apksig:8.2.2&quot;)  使用123val verifier: ApkVerifier = ApkVerifier.Builder(inputFile).build()val result = verifier.verify()val isSuccess = result.isVerified  inputFile为输入Apk的文件路径，构造一个新的Builder来验证提供的 APK 文件，该验证器旨在密切模仿 Android 平台的行为。这是为了使验证器能够用于检查 APK 的签名是否需要在 Android 上进行验证。 使用verifier.verify()获取结果。如果结果的ApkVerifier.Result.isVerified()返回true ，则可以认为 APK...</div></div></div></a><a class="pagination-related" href="/post/fb0c2c25/" title="自定义View的流程"><img class="cover" src="/img/cover/img_cover_89.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">自定义View的流程</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/7482f6f9/" title="仿墨迹24小时天气自定义View"><img class="cover" src="/img/cover/img_cover_8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-06</div><div class="info-item-2">仿墨迹24小时天气自定义View</div></div><div class="info-2"><div class="info-item-1">先看墨迹天气效果图 因为需求原因，改了一些样式  平滑的线话不多说，直接开始，首先是画出这条曲线，找到每个小时温度对应点位，连成一条线，左边显示最高温度和最低温度，最高温度对应曲线中的最高点，最低温度对应曲线中的最低点，直接上代码 1234567private Point calculateTempPoint(int left, int right, int temp) &#123;    double minHeight = tempBaseTop;    double maxHeight = tempBaseBottom;    double tempY = maxHeight - (temp - minTemp) * 1.0 / (maxTemp - minTemp) * (maxHeight - minHeight);    Point point = new Point((left + right) / 2, (int) tempY);    return...</div></div></div></a><a class="pagination-related" href="/post/fb0c2c25/" title="自定义View的流程"><img class="cover" src="/img/cover/img_cover_89.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-23</div><div class="info-item-2">自定义View的流程</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/post/779b2eb0/" title="【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)"><img class="cover" src="/img/cover/img_cover_76.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-05</div><div class="info-item-2">【自定义 View】相机预览点击聚焦框(带对焦动画，曝光调整)</div></div><div class="info-2"><div class="info-item-1">&emsp;&emsp;时隔十个月，今天再次来分享项目中使用到的自定义View，话不多说，直接开始，主要在相机预览的时候点击预览界面对焦时使用，并增加了对焦动画，可调节曝光。可以设置曝光的上限和下限，用于调整曝光时回调，点击后无操作5秒后隐藏。总的来说就是这些，下面开始上代码 对焦框123456789101112131415161718192021222324252627override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) &#123;    super.onMeasure(widthMeasureSpec, heightMeasureSpec)    val width = MeasureSpec.getSize(widthMeasureSpec)    val height = MeasureSpec.getSize(heightMeasureSpec)    frameRadius = width / 5f    frameRectF.left = (width / 2f) -...</div></div></div></a><a class="pagination-related" href="/post/627b7883/" title="Android CameraX中使用Camera2"><img class="cover" src="/img/cover/img_cover_64.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-15</div><div class="info-item-2">Android CameraX中使用Camera2</div></div><div class="info-2"><div class="info-item-1">前言CameraX 基于 Camera2 构建而成，并且 CameraX 提供了在 Camera2 实现中读取甚至写入属性的方式。如需了解完整详情，请参阅互操作性软件包。 那么该如何使用呢 注意：在 CameraX 中，设置底层 Camera2 属性会被标记为“实验性”，因为 Google 希望开发者能了解其使用情况。您设置的值会替换 CameraX 所设置的任何值。我们建议您仅在绝对必要时执行此操作，也建议在您这一端进行其他测试。 Camera2CameraInfo使用 Camera2CameraInfo 读取底层 CameraCharacteristics 12345val c2ci = Camera2CameraInfo.from(cameraInfo)c2ci.apply &#123;    // 获取设备支持的硬件级别    val level = getCameraCharacteristic(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL) ?:...</div></div></div></a><a class="pagination-related" href="/post/d8629189/" title="Android CameraX CameraController"><img class="cover" src="/img/cover/img_cover_12.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-30</div><div class="info-item-2">Android CameraX CameraController</div></div><div class="info-2"><div class="info-item-1">CameraX currently provides CameraView, a View that displays a preview of the camera, while also providing methods to take pictures, control the camera, and query camera information. CameraView clearly takes on more responsibilities than a View should, as it participates in the View hierarchy and displays content, while also owning camera resources that exist outside the scope and lifecycle of the View hierarchy. CameraView violates the separation of concerns principle, making it harder to...</div></div></div></a><a class="pagination-related" href="/post/ff52020d/" title="Android CameraX的基本使用"><img class="cover" src="/img/cover/img_cover_23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-14</div><div class="info-item-2">Android CameraX的基本使用</div></div><div class="info-2"><div class="info-item-1">前言虽然网上有很多CameraX的教程，但是每次用CameraX的时候总要在翻一翻官方的文档或者网上的教程之类的，这次就自己记一下吧，翻自己的总比翻别人的好吧🤪 声明依赖项要添加 CameraX 的依赖项，您必须将 Google Maven 代码库添加到项目中。 打开项目的 settings.gradle 文件并添加 google() 代码库，如下所示： GroovyKotlin1234567dependencyResolutionManagement &#123;    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)    repositories &#123;        google()        mavenCentral()    &#125;&#125;1234567dependencyResolutionManagement &#123;    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)   ...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">LazyIonEs</div><div class="author-info-description">学习Android两年半的Android开发实习生</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/lazyiones" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lazyiones@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">如果阅读过程中遇到了问题，请及时评论或者留言，看到了会在第一时间给出回复。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">2.</span> <span class="toc-text">常见的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AttributeSet%E4%B8%8ETypedArray"><span class="toc-number">3.</span> <span class="toc-text">AttributeSet与TypedArray</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#declare-styleable"><span class="toc-number">4.</span> <span class="toc-text">declare-styleable</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/ecd805d2/" title="使用Compose Desktop开发一款适用于安卓开发的桌面工具"><img src="/img/cover/img_cover_41.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Compose Desktop开发一款适用于安卓开发的桌面工具"/></a><div class="content"><a class="title" href="/post/ecd805d2/" title="使用Compose Desktop开发一款适用于安卓开发的桌面工具">使用Compose Desktop开发一款适用于安卓开发的桌面工具</a><time datetime="2024-03-11T02:46:01.000Z" title="发表于 2024-03-11 10:46:01">2024-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/a70c5b2/" title="ApkVerifier的使用"><img src="/img/cover/img_cover_73.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ApkVerifier的使用"/></a><div class="content"><a class="title" href="/post/a70c5b2/" title="ApkVerifier的使用">ApkVerifier的使用</a><time datetime="2024-02-14T05:28:36.000Z" title="发表于 2024-02-14 13:28:36">2024-02-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2897c959/" title="深入理解Android中的自定义属性"><img src="/img/cover/img_cover_67.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解Android中的自定义属性"/></a><div class="content"><a class="title" href="/post/2897c959/" title="深入理解Android中的自定义属性">深入理解Android中的自定义属性</a><time datetime="2024-01-10T11:52:04.000Z" title="发表于 2024-01-10 19:52:04">2024-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/fb0c2c25/" title="自定义View的流程"><img src="/img/cover/img_cover_89.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自定义View的流程"/></a><div class="content"><a class="title" href="/post/fb0c2c25/" title="自定义View的流程">自定义View的流程</a><time datetime="2023-12-23T08:14:46.000Z" title="发表于 2023-12-23 16:14:46">2023-12-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/d8629189/" title="Android CameraX CameraController"><img src="/img/cover/img_cover_12.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android CameraX CameraController"/></a><div class="content"><a class="title" href="/post/d8629189/" title="Android CameraX CameraController">Android CameraX CameraController</a><time datetime="2023-08-30T11:14:58.000Z" title="发表于 2023-08-30 19:14:58">2023-08-30</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/footer_bg.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By LazyIonEs</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = {"pageSize":8,"meta":["nick","mail","link"],"requiredMeta":["nick","mail"],"locale":{"sofa":"这里冷冷清清的，快来留下脚印吧！"}}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://waline.lazyiones.top',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
