@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Git常用指令</title>
+      <link href="/post/undefined/"/>
+      <url>/post/undefined/</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="GitHub-Desktop"><a href="#GitHub-Desktop" class="headerlink" title="GitHub Desktop"></a>GitHub Desktop</h3><p><a href="https://desktop.github.com/">desktop.github.com</a></p><h3 id="Git-全平台版"><a href="#Git-全平台版" class="headerlink" title="Git 全平台版"></a>Git 全平台版</h3><p><a href="https://git-scm.com/">git-scm.com</a></p><h2 id="配置工具"><a href="#配置工具" class="headerlink" title="配置工具"></a>配置工具</h2><p>对所有本地仓库的用户信息进行配置</p><p><code>$ git config --global user.name &quot;[name]&quot;</code></p><p>对你的commit操作设置关联的用户名</p><p><code>$ git config --global user.email &quot;[email address]&quot;</code></p><p>对你的commit操作设置关联的邮箱地址</p><p><code>$ git config --global color.ui auto</code></p><p>启用有帮助的彩色命令行输出</p><h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>分支是使用 Git 工作的一个重要部分。你做的任何提交都会发生在当前“checked out”到的分支上。使用 <code>git status</code> 查看那是哪个分支。</p><p><code>$ git branch [branch-name]</code></p><p>创建一个新分支</p><p><code>$ git switch -c [branch-name]</code></p><p>切换到指定分支并更新工作目录(working directory)</p><p><code>$ git merge [branch]</code></p><p>将指定分支的历史合并到当前分支。这通常在拉取请求(PR)中完成，但也是一个重要的 Git 操作。</p><p><code>$ git branch -d [branch-name]</code></p><p>删除指定分支</p><h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>当着手于一个新的仓库时，你只需创建一次。要么在本地创建，然后推送到 GitHub；要么通过 clone 一个现有仓库。</p><p><code>$ git init</code></p><p>在使用过 <code>git init</code> 命令后，使用以下命令将本地仓库与一个 GitHub 上的空仓库连接起来：</p><p><code>$ git remote add origin [url]</code></p><p>将现有目录转换为一个 Git 仓库</p><p><code>$ git clone [url]</code></p><p>Clone（下载）一个已存在于 GitHub 上的仓库，包括所有的文件、分支和提交(commits)</p><h2 id="gitignore-文件"><a href="#gitignore-文件" class="headerlink" title=".gitignore 文件"></a>.gitignore 文件</h2><p>有时一些文件最好不要用 Git 跟踪。这通常在名为 <code>.gitignore</code> 的特殊文件中完成。你可以在 <a href="https://github.com/github/gitignore">github.com&#x2F;github&#x2F;gitignore</a> 找到有用的 <code>.gitignore</code> 文件模板。</p><h2 id="同步更改"><a href="#同步更改" class="headerlink" title="同步更改"></a>同步更改</h2><p>将你本地仓库与 GitHub.com 上的远端仓库同步</p><p><code>$ git fetch</code></p><p>下载远端跟踪分支的所有历史</p><p><code>$ git merge</code></p><p>将远端跟踪分支合并到当前本地分支</p><p><code>$ git push</code></p><p>将所有本地分支提交上传到 GitHub</p><p><code>$ git pull</code></p><p>使用来自 GitHub 的对应远端分支的所有新提交更新你当前的本地工作分支。<code>git pull</code> 是 <code>git fetch</code> 和 <code>git merge</code> 的结合</p><h2 id="进行更改"><a href="#进行更改" class="headerlink" title="进行更改"></a>进行更改</h2><p>浏览并检查项目文件的发展</p><p><code>$ git log</code></p><p>列出当前分支的版本历史</p><p><code>$ git log --follow [file]</code></p><p>列出文件的版本历史，包括重命名</p><p><code>$ git diff [first-branch]...[second-branch]</code></p><p>展示两个分支之间的内容差异</p><p><code>$ git show [commit]</code></p><p>输出指定commit的元数据和内容变化</p><p><code>$ git add [file]</code></p><p>将文件进行快照处理用于版本控制</p><p><code>$ git commit -m &quot;[descriptive message]&quot;</code></p><p>将文件快照永久地记录在版本历史中</p><h2 id="重做提交"><a href="#重做提交" class="headerlink" title="重做提交"></a>重做提交</h2><p>清除错误和构建用于替换的历史</p><p><code>$ git reset [commit]</code></p><p>撤销所有 <code>[commit]</code> 后的的提交，在本地保存更改</p><p><code>$ git reset --hard [commit]</code></p><p>放弃所有历史，改回指定提交。</p><blockquote><p>小心！更改历史可能带来不良后果。如果你需要更改 GitHub（远端）已有的提交，请谨慎操作。如果你需要帮助，可访问 <a href="https://github.community/">github.community</a> 或联系支持(support)。</p></blockquote><h2 id="术语表"><a href="#术语表" class="headerlink" title="术语表"></a>术语表</h2><ul><li><strong>git</strong>: 一个开源的分布式版本控制系统</li><li><strong>GitHub</strong>: 一个托管和协作管理 Git 仓库的平台</li><li><strong>commit 提交</strong>: 一个 Git 对象，是你整个仓库的快照的哈希值</li><li><strong>branch 分支</strong>: 一个轻型可移动的 commit 指针</li><li><strong>clone</strong>: 一个仓库的本地版本，包含所有提交和分支</li><li><strong>remote 远端</strong>: 一个 GitHub 上的公共仓库，所有小组成员通过它来交换修改</li><li><strong>fork</strong>: 一个属于另一用户的 GitHub 上的仓库的副本</li><li><strong>pull request 拉取请求</strong>: 一处用于比较和讨论分支上引入的差异，且具有评审、评论、集成测试等功能的地方</li><li><strong>HEAD</strong>: 代表你当前的工作目录。使用<code>git checkout</code> 可移动 HEAD 指针到不同的分支、标记(tags)或提交</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Mac </category>
+          
+          <category> Git </category>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Mac </tag>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>使用Compose Desktop开发一款适用于安卓开发的桌面工具</title>
       <link href="/post/ecd805d2/"/>
       <url>/post/ecd805d2/</url>
@@ -185,7 +216,7 @@
     
     
     <entry>
-      <title>HomeBrew 常用指令</title>
+      <title>HomeBrew常用指令</title>
       <link href="/post/c054934f/"/>
       <url>/post/c054934f/</url>
       
